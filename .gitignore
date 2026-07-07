@@ -1,0 +1,10 @@
+# Large source video — 341MB, exceeds GitHub's 100MB file limit. Kept local only.
+LunaLove_FINAL_4K.mp4
+
+# Vercel
+.vercel
+
+# Dependencies / build / OS
+node_modules
+.DS_Store
+Thumbs.db
