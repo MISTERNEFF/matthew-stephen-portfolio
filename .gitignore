@@ -1,5 +1,8 @@
-# Large source video — 341MB, exceeds GitHub's 100MB file limit. Kept local only.
+# Large / raw source videos — kept local only (site uses the encoded files in assets/).
 LunaLove_FINAL_4K.mp4
+hero-reel-1.mp4
+hero-reel-2.mp4
+hero-reel-3.mp4
 
 # Vercel
 .vercel

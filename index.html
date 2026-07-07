@@ -101,6 +101,42 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 
 footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem;border-top:1px solid var(--border)}
 
+/* showreel */
+.reels{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem}
+.reel-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border);
+  background:#0d0d14;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
+.reel-card:hover{transform:translateY(-6px);border-color:rgba(124,108,255,.55);box-shadow:0 20px 55px rgba(0,0,0,.55)}
+.reel-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s}
+.reel-card:hover img{transform:scale(1.06);filter:brightness(.68)}
+.reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.4rem 1.5rem;background:linear-gradient(to top,rgba(7,7,11,.9) 0%,rgba(7,7,11,.15) 55%,transparent 100%)}
+.reel-card h3{font-size:1.25rem;margin-bottom:.2rem}
+.reel-card .meta{font-size:.83rem;color:#c6c6d4}
+.reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
+  width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.13);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
+.reel-card:hover .play{transform:translate(-50%,-50%) scale(1.14);background:var(--grad);border-color:transparent}
+.reel-card .play svg{width:26px;height:26px;margin-left:4px;fill:#fff}
+.reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.32rem .75rem;border-radius:99px;background:rgba(7,7,11,.6);backdrop-filter:blur(6px);border:1px solid var(--border);color:#dcdce6}
+
+/* video modal */
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+  padding:clamp(1rem,4vw,3rem);background:rgba(4,4,8,.88);backdrop-filter:blur(12px);opacity:0;transition:opacity .3s}
+.modal.open{display:flex;opacity:1}
+.modal-inner{position:relative;width:min(1100px,100%)}
+.modal video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block;box-shadow:0 30px 80px rgba(0,0,0,.65)}
+.modal-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem;gap:1rem;flex-wrap:wrap}
+.modal-title{font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem}
+.modal-title .m{color:var(--muted);font-weight:400;font-size:.85rem;margin-left:.6rem}
+.modal-actions{display:flex;gap:.6rem;align-items:center}
+.toggle-sound,.modal-close{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);
+  border-radius:99px;font-size:.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;transition:.25s}
+.toggle-sound{padding:.55rem 1.05rem}
+.toggle-sound:hover,.modal-close:hover{border-color:var(--accent2);background:rgba(255,255,255,.11)}
+.toggle-sound.on{background:var(--grad);color:#0a0a12;border-color:transparent;font-weight:600}
+.modal-close{width:40px;height:40px;padding:0;justify-content:center;font-size:1rem}
+
 /* reveal animation */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
 .reveal.in{opacity:1;transform:none}
@@ -111,6 +147,7 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 <nav id="nav">
   <a class="logo" href="#top">MS<span>.</span></a>
   <ul class="nav-links">
+    <li><a href="#showreel">Reel</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -125,15 +162,34 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
     <h1>Matthew Stephen's<br><span class="grad">Portfolio</span></h1>
     <p>Building at the frontier of generative AI — from custom model training pipelines to cinematic AI-driven visuals.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#work">View My Work</a>
+      <a class="btn btn-primary" href="#showreel">View My Work</a>
       <a class="btn btn-ghost" href="#contact">Get In Touch</a>
     </div>
   </div>
   <a class="scroll-hint" href="#about" aria-label="Scroll down">↓</a>
 </header>
 
+<section id="showreel">
+  <div class="section-label reveal">01 — Showreel</div>
+  <h2 class="section-title reveal">Cinematic AI, <span class="grad">in motion.</span></h2>
+  <div class="reels">
+    <div class="reel-card reveal" data-src="assets/lunalove-showcase.mp4" data-title="Luna Love" data-meta="Cinematic AI short film · With sound">
+      <img src="assets/poster-lunalove.jpg" alt="Luna Love — cinematic AI short film" loading="lazy">
+      <span class="badge">Short Film</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>Luna Love</h3><div class="meta">Cinematic AI short film · With sound</div></div>
+    </div>
+    <div class="reel-card reveal" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Three generative scenes, stitched">
+      <img src="assets/poster-reel.jpg" alt="AI generative video showreel" loading="lazy">
+      <span class="badge">Showreel</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>AI Showreel</h3><div class="meta">Three generative scenes, stitched together</div></div>
+    </div>
+  </div>
+</section>
+
 <section id="about">
-  <div class="section-label reveal">01 — About</div>
+  <div class="section-label reveal">02 — About</div>
   <h2 class="section-title reveal">Creative technologist,<br><span class="grad">AI-first builder.</span></h2>
   <div class="about-grid">
     <div class="reveal">
@@ -150,7 +206,7 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 </section>
 
 <section id="work">
-  <div class="section-label reveal">02 — Selected Work</div>
+  <div class="section-label reveal">03 — Selected Work</div>
   <h2 class="section-title reveal">Things I've <span class="grad">built.</span></h2>
   <div class="cards">
     <div class="card reveal">
@@ -181,7 +237,7 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 </section>
 
 <section id="skills">
-  <div class="section-label reveal">03 — Toolkit</div>
+  <div class="section-label reveal">04 — Toolkit</div>
   <h2 class="section-title reveal">Skills &amp; <span class="grad">stack.</span></h2>
   <div class="skill-row reveal">
     <span class="skill">Python</span><span class="skill">FastAPI</span><span class="skill">JavaScript</span>
@@ -193,12 +249,27 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 
 <section id="contact">
   <div class="contact-box reveal">
-    <div class="section-label">04 — Contact</div>
+    <div class="section-label">05 — Contact</div>
     <h2 class="section-title" style="margin-bottom:1rem">Let's make something <span class="grad">unreal.</span></h2>
     <p>Have a project in mind — or want a custom AI pipeline built from the ground up? I'd love to hear about it.</p>
     <a class="btn btn-primary" href="mailto:matthew.james.stephen.work@gmail.com">Say Hello</a>
   </div>
 </section>
+
+<div class="modal" id="videoModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="modal-inner">
+    <div class="modal-bar">
+      <div class="modal-title"><span id="modalTitle">Video</span><span class="m" id="modalMeta"></span></div>
+      <div class="modal-actions">
+        <button class="toggle-sound on" id="soundToggle" type="button" aria-pressed="true">
+          <span id="soundIcon">🔊</span><span id="soundLabel">Sound On</span>
+        </button>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close video">✕</button>
+      </div>
+    </div>
+    <video id="modalVideo" controls playsinline preload="metadata"></video>
+  </div>
+</div>
 
 <footer>© 2026 Matthew Stephen · Designed &amp; built with AI-assisted craft</footer>
 
@@ -207,6 +278,49 @@ const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- Video modal ----------
+const modal=document.getElementById('videoModal');
+const mVideo=document.getElementById('modalVideo');
+const mTitle=document.getElementById('modalTitle');
+const mMeta=document.getElementById('modalMeta');
+const sBtn=document.getElementById('soundToggle');
+const sIcon=document.getElementById('soundIcon');
+const sLabel=document.getElementById('soundLabel');
+
+function setSound(on){
+  mVideo.muted=!on;
+  sBtn.classList.toggle('on',on);
+  sBtn.setAttribute('aria-pressed',String(on));
+  sIcon.textContent=on?'🔊':'🔇';
+  sLabel.textContent=on?'Sound On':'Muted';
+}
+function openModal(card){
+  mVideo.src=card.dataset.src;
+  mTitle.textContent=card.dataset.title;
+  mMeta.textContent=card.dataset.meta;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  setSound(true);                 // start with sound (click is a user gesture)
+  const p=mVideo.play();
+  if(p&&p.catch)p.catch(()=>{setSound(false);mVideo.play();}); // fallback if browser blocks audio autoplay
+}
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  mVideo.pause();
+  mVideo.removeAttribute('src');
+  mVideo.load();
+}
+document.querySelectorAll('.reel-card').forEach(c=>{
+  c.addEventListener('click',()=>openModal(c));
+});
+sBtn.addEventListener('click',()=>setSound(mVideo.muted));
+document.getElementById('modalClose').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 </script>
 </body>
 </html>
