@@ -4,32 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matthew Stephen's Portfolio</title>
-<meta name="description" content="Matthew Stephen — AI/ML developer and creative technologist. Generative AI, LoRA training pipelines, and cinematic AI video.">
+<meta name="description" content="Matthew Stephen, AI Technical Artist and Agentic AI Engineer. Generative AI pipelines across local and cloud platforms, from LoRA training to cinematic AI production.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
+@property --shine-angle{syntax:'<angle>';inherits:false;initial-value:90deg}
 :root{
-  --bg:#07070b;
+  --bg:#0b0a08;
   --surface:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.09);
-  --text:#f2f2f5;
-  --muted:#9b9ba8;
-  --accent:#7c6cff;
-  --accent2:#00e0c6;
-  --grad:linear-gradient(120deg,#7c6cff 0%,#c86cff 45%,#00e0c6 100%);
+  --text:#f5f1e8;
+  --muted:#a89f8f;
+  --ink:#140f08;
+  --accent:#e2a63c;
+  --accent2:#d1604a;
+  --grad:linear-gradient(120deg,#eab54a 0%,#d1604a 100%);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.65;overflow-x:hidden}
 h1,h2,h3{font-family:'Sora',sans-serif;letter-spacing:-.02em}
-::selection{background:var(--accent);color:#fff}
+::selection{background:var(--accent);color:var(--ink)}
 
 /* ---------- Nav ---------- */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
   padding:1.1rem clamp(1.2rem,5vw,4rem);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:rgba(7,7,11,.35);border-bottom:1px solid transparent;transition:background .4s,border-color .4s}
-nav.scrolled{background:rgba(7,7,11,.75);border-color:var(--border)}
+  background:rgba(11,10,8,.35);border-bottom:1px solid transparent;transition:background .4s,border-color .4s}
+nav.scrolled{background:rgba(11,10,8,.75);border-color:var(--border)}
 .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--text)}
 .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .nav-links{display:flex;gap:2.2rem;list-style:none}
@@ -41,20 +43,26 @@ nav.scrolled{background:rgba(7,7,11,.75);border-color:var(--border)}
 .hero{position:relative;height:100svh;min-height:560px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;
-  background:radial-gradient(ellipse at center,rgba(7,7,11,.25) 0%,rgba(7,7,11,.72) 100%),
-             linear-gradient(to bottom,rgba(7,7,11,.35) 0%,transparent 30%,transparent 60%,var(--bg) 100%)}
+  background:radial-gradient(ellipse at center,rgba(11,10,8,.25) 0%,rgba(11,10,8,.72) 100%),
+             linear-gradient(to bottom,rgba(11,10,8,.35) 0%,transparent 30%,transparent 60%,var(--bg) 100%)}
 .hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:60rem}
 .hero .kicker{display:inline-block;font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent2);
   margin-bottom:1.4rem;padding:.45rem 1.1rem;border:1px solid var(--border);border-radius:99px;
   background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
 .hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);font-weight:800;line-height:1.06}
-.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{margin-top:1.4rem;font-size:clamp(1rem,2vw,1.25rem);color:#c9c9d4;font-weight:300;max-width:38rem;margin-left:auto;margin-right:auto}
+.hero h1 .grad{background:linear-gradient(var(--shine-angle),#eab54a,#d1604a);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 4.5s linear infinite}
+@keyframes shine{to{--shine-angle:450deg}}
+@media(prefers-reduced-motion:reduce){.hero h1 .grad{animation:none}}
+.hero p{margin-top:1.4rem;font-size:clamp(1rem,2vw,1.25rem);color:#d9d0c0;font-weight:700;max-width:38rem;margin-left:auto;margin-right:auto}
 .hero-cta{margin-top:2.4rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .btn{display:inline-block;padding:.85rem 1.9rem;border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--grad);color:#0a0a12;box-shadow:0 8px 30px rgba(124,108,255,.35)}
-.btn-primary:hover{box-shadow:0 12px 40px rgba(124,108,255,.5)}
+.btn-primary{background:var(--grad);color:var(--ink);box-shadow:0 8px 30px rgba(226,166,60,.35)}
+.btn-primary:hover{box-shadow:0 12px 40px rgba(226,166,60,.5)}
+.btn-primary.shine{background:linear-gradient(var(--shine-angle),#eab54a,#d1604a);animation:shine 4.5s linear infinite}
+@media(prefers-reduced-motion:reduce){.btn-primary.shine{animation:none}}
 .btn-ghost{border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,.05);backdrop-filter:blur(8px)}
 .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);font-size:1.4rem;animation:bob 2.2s ease-in-out infinite;text-decoration:none}
 @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
@@ -66,7 +74,7 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 .section-title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* about */
-.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:3.5rem;align-items:start}
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:3.5rem;align-items:center}
 .about-grid p{color:var(--muted);font-size:1.05rem;margin-bottom:1.1rem}
 .about-grid p strong{color:var(--text);font-weight:500}
 .stat-cards{display:grid;gap:1rem}
@@ -79,50 +87,50 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem}
 .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem 1.8rem;
   transition:transform .35s,border-color .35s,background .35s;overflow:hidden}
-.card:hover{transform:translateY(-6px);border-color:rgba(124,108,255,.5);background:rgba(124,108,255,.06)}
+.card:hover{transform:translateY(-6px);border-color:rgba(209,96,74,.55);background:rgba(209,96,74,.08)}
 .card .icon{font-size:1.9rem;margin-bottom:1.1rem;display:block}
 .card h3{font-size:1.15rem;margin-bottom:.6rem}
 .card p{color:var(--muted);font-size:.93rem}
 .card .tags{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.45rem}
-.tag{font-size:.7rem;letter-spacing:.05em;padding:.28rem .7rem;border-radius:99px;border:1px solid var(--border);color:#b9b9c8;background:rgba(255,255,255,.03)}
+.tag{font-size:.7rem;letter-spacing:.05em;padding:.28rem .7rem;border-radius:99px;border:1px solid var(--border);color:#c7bcab;background:rgba(255,255,255,.03)}
 
 /* skills */
 .skill-row{display:flex;flex-wrap:wrap;gap:.7rem}
 .skill{padding:.6rem 1.25rem;border-radius:99px;border:1px solid var(--border);background:var(--surface);
-  font-size:.9rem;color:#d5d5e0;transition:border-color .25s,transform .25s}
+  font-size:.9rem;color:#ded3c2;transition:border-color .25s,transform .25s}
 .skill:hover{border-color:var(--accent2);transform:translateY(-2px)}
 
 /* contact */
 .contact-box{text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:28px;
   padding:clamp(2.5rem,6vw,4.5rem);position:relative;overflow:hidden}
 .contact-box::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:60%;height:80%;
-  background:radial-gradient(ellipse,rgba(124,108,255,.22),transparent 70%);pointer-events:none}
+  background:radial-gradient(ellipse,rgba(226,166,60,.2),transparent 70%);pointer-events:none}
 .contact-box p{color:var(--muted);max-width:32rem;margin:0 auto 2rem}
 
-footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem;border-top:1px solid var(--border)}
+footer{text-align:center;padding:2.5rem 1rem 3rem;color:#6b6255;font-size:.82rem;border-top:1px solid var(--border)}
 
 /* showreel */
 .reels{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem}
 .reel-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border);
-  background:#0d0d14;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
-.reel-card:hover{transform:translateY(-6px);border-color:rgba(124,108,255,.55);box-shadow:0 20px 55px rgba(0,0,0,.55)}
+  background:#14110c;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
+.reel-card:hover{transform:translateY(-6px);border-color:rgba(226,166,60,.55);box-shadow:0 20px 55px rgba(0,0,0,.55)}
 .reel-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s}
 .reel-card:hover img{transform:scale(1.06);filter:brightness(.68)}
 .reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:1.4rem 1.5rem;background:linear-gradient(to top,rgba(7,7,11,.9) 0%,rgba(7,7,11,.15) 55%,transparent 100%)}
+  padding:1.4rem 1.5rem;background:linear-gradient(to top,rgba(11,10,8,.9) 0%,rgba(11,10,8,.15) 55%,transparent 100%)}
 .reel-card h3{font-size:1.25rem;margin-bottom:.2rem}
-.reel-card .meta{font-size:.83rem;color:#c6c6d4}
+.reel-card .meta{font-size:.83rem;color:#d1c6b6}
 .reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
   width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.13);backdrop-filter:blur(6px);
   border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
 .reel-card:hover .play{transform:translate(-50%,-50%) scale(1.14);background:var(--grad);border-color:transparent}
 .reel-card .play svg{width:26px;height:26px;margin-left:4px;fill:#fff}
 .reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
-  padding:.32rem .75rem;border-radius:99px;background:rgba(7,7,11,.6);backdrop-filter:blur(6px);border:1px solid var(--border);color:#dcdce6}
+  padding:.32rem .75rem;border-radius:99px;background:rgba(11,10,8,.6);backdrop-filter:blur(6px);border:1px solid var(--border);color:#e6ddcf}
 
 /* video modal */
 .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
-  padding:clamp(1rem,4vw,3rem);background:rgba(4,4,8,.88);backdrop-filter:blur(12px);opacity:0;transition:opacity .3s}
+  padding:clamp(1rem,4vw,3rem);background:rgba(8,7,5,.88);backdrop-filter:blur(12px);opacity:0;transition:opacity .3s}
 .modal.open{display:flex;opacity:1}
 .modal-inner{position:relative;width:min(1100px,100%)}
 .modal video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block;box-shadow:0 30px 80px rgba(0,0,0,.65)}
@@ -134,7 +142,7 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
   border-radius:99px;font-size:.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;transition:.25s}
 .toggle-sound{padding:.55rem 1.05rem}
 .toggle-sound:hover,.modal-close:hover{border-color:var(--accent2);background:rgba(255,255,255,.11)}
-.toggle-sound.on{background:var(--grad);color:#0a0a12;border-color:transparent;font-weight:600}
+.toggle-sound.on{background:var(--grad);color:var(--ink);border-color:transparent;font-weight:600}
 .modal-close{width:40px;height:40px;padding:0;justify-content:center;font-size:1rem}
 
 /* reveal animation */
@@ -158,11 +166,11 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 <header class="hero" id="top">
   <video autoplay muted loop playsinline poster="" src="assets/hero.mp4"></video>
   <div class="hero-content">
-    <span class="kicker">AI · Design · Creative Technology</span>
+    <span class="kicker">AI Technical Artist · Agentic AI Engineer</span>
     <h1>Matthew Stephen's<br><span class="grad">Portfolio</span></h1>
-    <p>Building at the frontier of generative AI - from custom model training pipelines to cinematic AI-driven visuals.</p>
+    <p>Senior AI Technical Artist and Agentic AI Engineer, building generative pipelines and cinematic AI visuals with both local and cloud-based tools.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#showreel">View My Work</a>
+      <a class="btn btn-primary shine" href="#showreel">View My Work</a>
       <a class="btn btn-ghost" href="#contact">Get In Touch</a>
     </div>
   </div>
@@ -170,11 +178,11 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 </header>
 
 <section id="showreel">
-  <div class="section-label reveal">01 — Showreel</div>
+  <div class="section-label reveal">01 - Showreel</div>
   <h2 class="section-title reveal">Cinematic AI, <span class="grad">in motion.</span></h2>
   <div class="reels">
     <div class="reel-card reveal" data-src="assets/lunalove-showcase.mp4" data-title="Luna Love" data-meta="Cinematic AI Promo presented during SOF Week 2026">
-      <img src="assets/poster-lunalove.jpg" alt="Luna Love — cinematic AI promo" loading="lazy">
+      <img src="assets/poster-lunalove.jpg" alt="Luna Love - cinematic AI promo" loading="lazy">
       <span class="badge">Short Film</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>Luna Love</h3><div class="meta">Cinematic AI Promo presented during SOF Week 2026</div></div>
@@ -189,69 +197,69 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#5b5b68;font-size:.82rem
 </section>
 
 <section id="about">
-  <div class="section-label reveal">02 — About</div>
-  <h2 class="section-title reveal">Creative technologist,<br><span class="grad">AI-first builder.</span></h2>
+  <div class="section-label reveal">02 - About</div>
   <div class="about-grid">
     <div class="reveal">
-      <p>I'm Matthew — a developer and designer working where <strong>machine learning meets visual craft</strong>. I build end-to-end generative AI systems: training pipelines, inference backends, and the polished interfaces that make them usable.</p>
-      <p>My recent work spans <strong>custom LoRA training applications</strong>, ComfyUI-powered image and video generation workflows, and full-stack tools that turn cutting-edge diffusion models into production-ready products.</p>
-      <p>The film playing behind the headline above? <strong>Generated end-to-end with AI</strong> — directed, curated, and finished by hand.</p>
+      <h2 class="section-title">AI Technical Artist,<br><span class="grad">Agentic AI Engineer.</span></h2>
+      <p>I'm Matthew, a Senior AI Technical Artist and Agentic AI Engineer with an active U.S. government clearance. I work where machine learning meets visual craft, building generative pipelines from model training to the interfaces people actually use.</p>
+      <p>I run <strong>several AI creative pipelines</strong> at once and have grown output by 200%, mixing local tools like ComfyUI and AI-Toolkit with cloud generators like Kling and Higgsfield, then shipping full-stack tools that turn the results into finished deliverables.</p>
+      <p>The film playing behind the headline above? <strong>Generated end-to-end with AI</strong>, then directed, curated, and finished by hand.</p>
     </div>
     <div class="stat-cards reveal">
-      <div class="stat"><b>End-to-End</b><span>From model training to deployed UI</span></div>
-      <div class="stat"><b>GPU-Native</b><span>Local diffusion &amp; LLM inference pipelines</span></div>
-      <div class="stat"><b>Design-Led</b><span>Every tool built to feel as good as it works</span></div>
+      <div class="stat"><b>200%</b><span>Output growth through AI-driven creative pipelines</span></div>
+      <div class="stat"><b>Local + Cloud</b><span>Diffusion &amp; LLM pipelines, self-hosted and online</span></div>
+      <div class="stat"><b>Cleared</b><span>Active U.S. government clearance, veteran</span></div>
     </div>
   </div>
 </section>
 
 <section id="work">
-  <div class="section-label reveal">03 — Selected Work</div>
+  <div class="section-label reveal">03 - Selected Work</div>
   <h2 class="section-title reveal">Things I've <span class="grad">built.</span></h2>
   <div class="cards">
     <div class="card reveal">
       <span class="icon">🎛️</span>
       <h3>LoRA Training Studio</h3>
-      <p>A full desktop application for training custom LoRA models — dataset management, captioning, training orchestration, and one-click inference testing.</p>
-      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Diffusion</span><span class="tag">CUDA</span></div>
+      <p>A tool I built for training custom LoRA models: dataset management, captioning, training orchestration, and one-click inference testing.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">AI-Toolkit</span><span class="tag">Diffusion</span><span class="tag">CUDA</span></div>
     </div>
     <div class="card reveal">
       <span class="icon">🎬</span>
-      <h3>Cinematic AI Video</h3>
-      <p>AI-generated short-form film production — text-to-video and image-to-video pipelines with post-processing, upscaling, and color-grade passes.</p>
-      <div class="tags"><span class="tag">Wan Video</span><span class="tag">ComfyUI</span><span class="tag">4K Pipeline</span></div>
+      <h3>Cinematic AI Videos</h3>
+      <p>AI-generated short-form video production: text-to-video and image-to-video pipelines with post-processing, upscaling, and color grading.</p>
+      <div class="tags"><span class="tag">Higgsfield</span><span class="tag">Kling</span><span class="tag">Seedance</span></div>
     </div>
     <div class="card reveal">
       <span class="icon">🖼️</span>
       <h3>Image Generation Workflows</h3>
-      <p>Production ComfyUI workflows for text-to-image, image editing, and character-consistent generation — tuned node graphs with custom post-processing.</p>
+      <p>Production ComfyUI workflows for text-to-image, image editing, and character-consistent generation, with tuned node graphs and custom post-processing.</p>
       <div class="tags"><span class="tag">Qwen-Image</span><span class="tag">SDXL</span><span class="tag">Node Graphs</span></div>
     </div>
     <div class="card reveal">
       <span class="icon">🤖</span>
       <h3>Local LLM Systems</h3>
-      <p>Self-hosted language model deployments — persona-driven chat backends, prompt engineering, and fine-tuning strategies for consumer GPUs.</p>
-      <div class="tags"><span class="tag">Ollama</span><span class="tag">Fine-Tuning</span><span class="tag">Full-Stack</span></div>
+      <p>Self-hosted language model deployments: persona-driven chat backends, prompt engineering, and fine-tuning strategies for consumer GPUs.</p>
+      <div class="tags"><span class="tag">Ollama</span><span class="tag">Fine-Tuning</span><span class="tag">Claude Code</span></div>
     </div>
   </div>
 </section>
 
 <section id="skills">
-  <div class="section-label reveal">04 — Toolkit</div>
+  <div class="section-label reveal">04 - Toolkit</div>
   <h2 class="section-title reveal">Skills &amp; <span class="grad">stack.</span></h2>
   <div class="skill-row reveal">
-    <span class="skill">Python</span><span class="skill">FastAPI</span><span class="skill">JavaScript</span>
-    <span class="skill">Stable Diffusion</span><span class="skill">ComfyUI</span><span class="skill">LoRA Training</span>
-    <span class="skill">Video Generation</span><span class="skill">LLM Deployment</span><span class="skill">Prompt Engineering</span>
-    <span class="skill">CUDA / GPU Optimization</span><span class="skill">UI/UX Design</span><span class="skill">WSL2 / Linux</span>
+    <span class="skill">Adobe Creative Suite</span><span class="skill">DaVinci Resolve</span><span class="skill">Blender</span>
+    <span class="skill">Unreal Engine</span><span class="skill">ComfyUI</span><span class="skill">LoRA Training</span>
+    <span class="skill">Higgsfield</span><span class="skill">Kling</span><span class="skill">Seedance</span>
+    <span class="skill">Claude Code</span><span class="skill">Prompt Engineering</span><span class="skill">Model Evaluation</span>
   </div>
 </section>
 
 <section id="contact">
   <div class="contact-box reveal">
-    <div class="section-label">05 — Contact</div>
+    <div class="section-label">05 - Contact</div>
     <h2 class="section-title" style="margin-bottom:1rem">Let's make something <span class="grad">unreal.</span></h2>
-    <p>Have a project in mind — or want a custom AI pipeline built from the ground up? I'd love to hear about it.</p>
+    <p>Open to full-time AI design and engineering roles, plus select freelance projects. I'd love to hear from you.</p>
     <a class="btn btn-primary" href="mailto:matthew.james.stephen.work@gmail.com">Say Hello</a>
   </div>
 </section>
