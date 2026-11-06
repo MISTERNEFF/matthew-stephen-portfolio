@@ -3,264 +3,563 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matthew Stephen's Portfolio</title>
-<meta name="description" content="Matthew Stephen, AI Technical Artist and Agentic AI Engineer. Generative AI pipelines across local and cloud platforms, from LoRA training to cinematic AI production.">
+<title>Matthew Stephen · Generative AI Engineer</title>
+<meta name="description" content="Matthew Stephen: generative AI engineer, agentic systems developer and creative technologist. Navy veteran with an active U.S. government clearance. LoRA training, ComfyUI pipelines, multi-agent automation and full-stack AI apps.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matthewstephen.vercel.app/">
+<meta property="og:title" content="Matthew Stephen · I build AI that builds.">
+<meta property="og:description" content="Generative AI engineer, agentic systems developer and creative technologist. Navy veteran, active U.S. government clearance.">
+<meta property="og:image" content="https://matthewstephen.vercel.app/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#05070d">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Archivo:wdth,wght@62..125,800..900&display=swap" rel="stylesheet">
 <style>
-@property --shine-angle{syntax:'<angle>';inherits:false;initial-value:90deg}
+@property --shine{syntax:'<angle>';inherits:false;initial-value:90deg}
 :root{
-  --bg:#0b0a08;
-  --surface:rgba(255,255,255,.04);
-  --border:rgba(255,255,255,.09);
-  --text:#f5f1e8;
-  --muted:#a89f8f;
-  --ink:#140f08;
-  --accent:#e2a63c;
-  --accent2:#d1604a;
-  --grad:linear-gradient(120deg,#eab54a 0%,#d1604a 100%);
+  --bg:#05070d;
+  --bg2:#0a1020;
+  --surface:rgba(255,255,255,.035);
+  --surface2:rgba(255,255,255,.06);
+  --border:rgba(148,180,255,.13);
+  --text:#eef3ff;
+  --muted:#93a0bd;
+  --blue:#4f8cff;
+  --cyan:#22d3ee;
+  --amber:#f5a524;
+  --grad:linear-gradient(120deg,#6aa6ff 0%,#22d3ee 100%);
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  --kin:'Archivo','Arial Black',Impact,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.65;overflow-x:hidden}
-h1,h2,h3{font-family:'Sora',sans-serif;letter-spacing:-.02em}
-::selection{background:var(--accent);color:var(--ink)}
+h1,h2,h3{font-family:'Sora',sans-serif;letter-spacing:-.02em;line-height:1.12}
+::selection{background:var(--cyan);color:#021018}
+a{color:inherit}
+.grad{background:linear-gradient(var(--shine),#6aa6ff,#22d3ee 55%,#6aa6ff);-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{--shine:450deg}}
 
-/* ---------- Nav ---------- */
+/* ambient grid + glow behind everything */
+.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%,rgba(79,140,255,.16),transparent 60%),
+    radial-gradient(50rem 35rem at -10% 40%,rgba(34,211,238,.08),transparent 60%),
+    linear-gradient(var(--bg),var(--bg))}
+.ambient::after{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(148,180,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,180,255,.05) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 75%)}
+
+/* ---------- nav ---------- */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
-  padding:1.1rem clamp(1.2rem,5vw,4rem);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:rgba(11,10,8,.35);border-bottom:1px solid transparent;transition:background .4s,border-color .4s}
-nav.scrolled{background:rgba(11,10,8,.75);border-color:var(--border)}
-.logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--text)}
-.logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.nav-links{display:flex;gap:2.2rem;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .25s}
+  padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1.2rem,5vw,4rem) 1rem;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(5,7,13,.3);border-bottom:1px solid transparent;transition:background .4s,border-color .4s}
+nav.scrolled{background:rgba(5,7,13,.78);border-color:var(--border)}
+.logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.05rem;text-decoration:none;letter-spacing:.02em}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:color .25s}
 .nav-links a:hover{color:var(--text)}
-@media(max-width:640px){.nav-links{display:none}}
+.nav-links .cta{color:#021018;background:var(--grad);padding:.5rem 1rem;border-radius:99px}
+.nav-links .cta:hover{color:#021018}
+@media(max-width:720px){.nav-links li:not(:last-child){display:none}}
 
-/* ---------- Hero ---------- */
-.hero{position:relative;height:100svh;min-height:560px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:7rem clamp(1.2rem,6vw,5rem) 5rem}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#05070d}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;
-  background:radial-gradient(ellipse at center,rgba(11,10,8,.25) 0%,rgba(11,10,8,.72) 100%),
-             linear-gradient(to bottom,rgba(11,10,8,.35) 0%,transparent 30%,transparent 60%,var(--bg) 100%)}
-.hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:60rem}
-.hero .kicker{display:inline-block;font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent2);
-  margin-bottom:1.4rem;padding:.45rem 1.1rem;border:1px solid var(--border);border-radius:99px;
-  background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
-.hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);font-weight:800;line-height:1.06}
-.hero h1 .grad{background:linear-gradient(var(--shine-angle),#eab54a,#d1604a);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:shine 4.5s linear infinite}
-@keyframes shine{to{--shine-angle:450deg}}
-@media(prefers-reduced-motion:reduce){.hero h1 .grad{animation:none}}
-.hero p{margin-top:1.4rem;font-size:clamp(1rem,2vw,1.25rem);color:#d9d0c0;font-weight:700;max-width:38rem;margin-left:auto;margin-right:auto}
-.hero-cta{margin-top:2.4rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:.85rem 1.9rem;border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s}
+  background:radial-gradient(ellipse at center,rgba(5,7,13,.46) 0%,rgba(5,7,13,.78) 100%),
+             linear-gradient(to bottom,rgba(5,7,13,.45) 0%,transparent 28%,transparent 62%,var(--bg) 100%)}
+.hero-inner{position:relative;z-index:3;max-width:60rem;width:100%;margin:0 auto;text-align:center}
+/* video-synced HUD */
+.hud{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hud .br{position:absolute;width:34px;height:34px;border:0 solid rgba(34,211,238,.85);animation:brIn .7s .15s both cubic-bezier(.2,.9,.25,1)}
+.hud .tl{top:84px;left:22px;border-top-width:2px;border-left-width:2px}
+.hud .tr{top:84px;right:22px;border-top-width:2px;border-right-width:2px}
+.hud .bl{bottom:22px;left:22px;border-bottom-width:2px;border-left-width:2px}
+.hud .bq{bottom:22px;right:22px;border-bottom-width:2px;border-right-width:2px}
+@keyframes brIn{from{opacity:0;transform:scale(1.7)}}
+.hud .rec,.hud .shot{position:absolute;top:98px;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem}
+.hud .rec{left:68px;color:#eef3ff}
+.hud .rec b{width:8px;height:8px;border-radius:50%;background:#ff3b5c;box-shadow:0 0 10px #ff3b5c;animation:blink 1s steps(1) infinite}
+.hud .shot{right:68px;color:#cfe0ff}
+.hud .shot em{font-style:normal;color:var(--cyan)}
+.hud .lower{position:absolute;left:clamp(1.4rem,5vw,4.2rem);bottom:clamp(2.2rem,7vh,4.4rem);display:flex;flex-direction:column;align-items:flex-start;gap:.5rem}
+.hud .lw{font-family:var(--kin);font-weight:900;text-transform:uppercase;font-size:clamp(1.7rem,3.8vw,3.1rem);line-height:.9;color:#eef3ff;text-shadow:0 2px 24px rgba(0,0,0,.65);min-height:.9em}
+.hud .lc{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;background:var(--cyan);color:#021018;padding:.25rem .6rem;border-radius:4px}
+.hud .lc:empty{display:none}
+.hud .scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.95),transparent);box-shadow:0 0 18px rgba(34,211,238,.8);opacity:0}
+@media(max-width:700px){.hud .shot{display:none}.hud .rec{left:52px;top:92px}.hud .br{width:22px;height:22px}.hud .tl,.hud .tr{top:80px}.scroll-hint{display:none}}
+.pill{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;letter-spacing:.06em;color:#cfe0ff;
+  padding:.45rem 1rem;border:1px solid var(--border);border-radius:99px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);font-weight:800;line-height:1.06;margin-top:1.4rem;text-shadow:0 4px 40px rgba(0,0,0,.35)}
+.ch{display:inline-block;will-change:transform,filter,opacity}
+.wd{display:inline-block;white-space:nowrap}
+.flash{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(70rem 40rem at 30% 55%,rgba(34,211,238,.32),rgba(255,255,255,.06) 55%,transparent 80%)}
+.hero .sub{margin:1.4rem auto 0;font-size:clamp(1.02rem,1.9vw,1.22rem);color:#d6e0f5;max-width:40rem;opacity:0;animation:fade .6s .2s forwards}
+.hero .sub strong{color:var(--text);font-weight:600}
+@keyframes fade{to{opacity:1}}
+.hero-cta{margin-top:2.2rem;display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fade .6s .35s forwards}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.7rem;border-radius:99px;font-size:.92rem;font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s,background .25s;border:0;cursor:pointer;font-family:inherit}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--grad);color:var(--ink);box-shadow:0 8px 30px rgba(226,166,60,.35)}
-.btn-primary:hover{box-shadow:0 12px 40px rgba(226,166,60,.5)}
-.btn-primary.shine{background:linear-gradient(var(--shine-angle),#eab54a,#d1604a);animation:shine 4.5s linear infinite}
-@media(prefers-reduced-motion:reduce){.btn-primary.shine{animation:none}}
+.btn-primary{background:var(--grad);color:#021018;box-shadow:0 10px 34px rgba(34,211,238,.28)}
+.btn-primary:hover{box-shadow:0 14px 44px rgba(34,211,238,.42)}
 .btn-ghost{border:1px solid var(--border);color:var(--text);background:rgba(255,255,255,.05);backdrop-filter:blur(8px)}
-.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);font-size:1.4rem;animation:bob 2.2s ease-in-out infinite;text-decoration:none}
-@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+.scroll-hint{position:absolute;bottom:4.2rem;left:50%;z-index:2;width:26px;height:42px;border:2px solid rgba(207,224,255,.4);border-radius:14px;transform:translateX(-50%)}
+.scroll-hint::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;border-radius:2px;background:var(--cyan);transform:translateX(-50%);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:1;transform:translate(-50%,0)}80%{opacity:0;transform:translate(-50%,14px)}100%{opacity:0}}
 
-/* ---------- Sections ---------- */
+/* ---------- stats strip ---------- */
+.stats{position:relative;z-index:3;max-width:75rem;margin:2.5rem auto 0;padding:0 clamp(1.2rem,6vw,5rem)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:22px;background:rgba(10,16,32,.72);backdrop-filter:blur(14px);overflow:hidden}
+.stat{padding:1.5rem 1.4rem;border-right:1px solid var(--border)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:'Sora',sans-serif;font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;line-height:1.1}
+.stat>span{color:var(--muted);font-size:.86rem}
+@media(max-width:760px){.stats-grid{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--border)}}
+
+/* ---------- kinetic band ---------- */
+.band{position:relative;overflow:hidden;margin-top:clamp(4rem,9vw,6rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:radial-gradient(60rem 30rem at 50% 120%,rgba(34,211,238,.14),transparent 70%),#04060b;height:clamp(22rem,62vh,34rem);display:grid;place-items:center}
+.band::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(148,180,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(148,180,255,.06) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%)}
+.band .cap{position:absolute;top:1.2rem;left:clamp(1.2rem,5vw,3rem);font-family:var(--mono);font-size:.74rem;color:#93a0bd;letter-spacing:.04em}
+.band .cap mark{background:var(--cyan);color:#021018;padding:.05rem .35rem;border-radius:4px}
+.prompt{position:relative;z-index:2;width:min(40rem,88vw);border:1.5px solid rgba(34,211,238,.6);border-radius:14px;background:rgba(5,9,18,.85);padding:1.1rem 1.3rem 1.3rem;box-shadow:0 0 0 1px rgba(34,211,238,.15),0 0 40px rgba(34,211,238,.18);font-family:var(--mono);opacity:0}
+.prompt .ph{font-family:var(--kin);font-weight:900;font-size:1.05rem;letter-spacing:.02em;color:#eef3ff;margin-bottom:.6rem}
+.prompt .pt{font-size:clamp(.9rem,2.2vw,1.1rem);color:#d6e0f5;min-height:3.2em;line-height:1.7}
+.prompt mark{background:transparent;color:inherit;border-radius:5px;padding:0 .15rem;transition:background .18s,color .18s}
+.prompt mark.on{background:var(--cyan);color:#021018}
+.prompt .cur{display:inline-block;width:.55em;height:1.1em;background:var(--cyan);vertical-align:-.2em;animation:blink 1s steps(1) infinite}
+.big{position:absolute;z-index:2;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--kin);font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.01em;font-size:clamp(3.6rem,13vw,10.5rem);color:#eef3ff;pointer-events:none;padding:0 1rem}
+.big .acc{color:var(--cyan);text-shadow:0 0 34px rgba(34,211,238,.6)}
+
+/* ---------- sections ---------- */
 section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;margin:0 auto}
-.section-label{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
-.section-title{font-size:clamp(1.9rem,4.5vw,3rem);font-weight:800;margin-bottom:2.6rem}
-.section-title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.label{font-family:var(--mono);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:.9rem}
+.title{font-size:clamp(2rem,4.8vw,3.3rem);font-weight:800;margin-bottom:1rem}
+.title .w{display:inline-block;will-change:transform,filter,opacity}
+.js .title[data-words]{visibility:hidden}
+.lede{color:var(--muted);font-size:1.08rem;max-width:44rem;margin-bottom:3rem}
+
+/* ---------- case studies ---------- */
+.case{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,5vw,4rem);align-items:center;margin-bottom:clamp(4rem,9vw,7rem)}
+.case:nth-of-type(even) .case-media{order:-1}
+.case .kick{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:#a9c3ff;margin-bottom:.8rem}
+.case h3{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin-bottom:1rem}
+.case p{color:#b9c5de;font-size:1.02rem;margin-bottom:1.2rem}
+.ticks{list-style:none;display:grid;gap:.55rem;margin:1.4rem 0}
+.ticks li{position:relative;padding-left:1.6rem;color:#d6e0f5;font-size:.95rem}
+.ticks li::before{content:"";position:absolute;left:0;top:.48em;width:.7rem;height:.7rem;border-radius:3px;background:var(--grad);box-shadow:0 0 12px rgba(34,211,238,.6)}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.tag{font-family:var(--mono);font-size:.7rem;padding:.28rem .7rem;border-radius:99px;border:1px solid var(--border);color:#c4d3f2;background:rgba(255,255,255,.03)}
+.case-media{position:relative;border-radius:24px;border:1px solid var(--border);background:linear-gradient(160deg,rgba(18,28,54,.9),rgba(8,12,24,.95));overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+@media(max-width:880px){.case{grid-template-columns:1fr}.case:nth-of-type(even) .case-media{order:0}}
+
+/* agent diagram */
+.diagram{padding:1.2rem 1.2rem .4rem}
+.diagram svg{width:100%;height:auto;display:block}
+.node rect{fill:rgba(79,140,255,.08);stroke:rgba(148,180,255,.35);stroke-width:1.2}
+.node text{fill:#eef3ff;font-family:'Sora',sans-serif;font-size:13px;font-weight:600}
+.node .s{fill:#93a0bd;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:400}
+.node.agent rect{animation:work 3s infinite}
+.node.agent:nth-of-type(2) rect{animation-delay:1s}.node.agent:nth-of-type(3) rect{animation-delay:2s}
+@keyframes work{0%,100%{fill:rgba(79,140,255,.08);stroke:rgba(148,180,255,.35)}45%{fill:rgba(34,211,238,.2);stroke:#22d3ee}}
+.wire{fill:none;stroke:rgba(148,180,255,.28);stroke-width:1.4;stroke-dasharray:4 6;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-20}}
+.pkt{fill:#22d3ee;filter:drop-shadow(0 0 6px #22d3ee)}
+.term{margin:0 1.2rem 1.2rem;border-radius:14px;background:#03050a;border:1px solid var(--border);font-family:var(--mono);font-size:.78rem;color:#a9c3ff;padding:.9rem 1rem;height:9.6rem;overflow:hidden}
+.term .bar{display:flex;gap:.35rem;margin-bottom:.6rem}
+.term .bar i{width:9px;height:9px;border-radius:50%;background:#1f2a44}
+.term .ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.term .ok{color:#34d399}.term .wait{color:var(--amber)}.term .cmd{color:#eef3ff}
+.caret{display:inline-block;width:.55em;height:1em;background:var(--cyan);vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* studio */
+.studio{padding:1.6rem}
+.studio-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem}
+.studio-head img{width:58px;height:58px;filter:drop-shadow(0 0 18px rgba(245,165,36,.45))}
+.studio-head b{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800}
+.studio-head b span{color:var(--amber)}
+.studio-head small{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.feat div{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:12px;padding:.75rem .8rem;font-size:.83rem;color:#d6e0f5;transition:border-color .3s,background .3s,transform .3s}
+.feat div i{display:block;font-style:normal;font-family:var(--mono);font-size:.64rem;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.15rem}
+.feat div.lit{border-color:rgba(245,165,36,.7);background:rgba(245,165,36,.09);transform:translateY(-2px)}
+.studio-foot{margin-top:1.1rem;display:flex;gap:1.4rem;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.studio-foot b{color:var(--amber);font-weight:600}
+@media(max-width:520px){.feat{grid-template-columns:repeat(2,1fr)}}
+
+/* compare slider */
+.compare{position:relative;aspect-ratio:16/10;user-select:none;touch-action:pan-y}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.compare .top{clip-path:inset(0 0 0 var(--pos,50%))}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:#fff;box-shadow:0 0 18px rgba(34,211,238,.9);transform:translateX(-1px);pointer-events:none}
+.compare .handle::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:rgba(5,7,13,.75);border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;font-size:1rem;color:#fff;backdrop-filter:blur(6px)}
+.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.compare .tagl,.compare .tagr{position:absolute;top:.9rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.7);border:1px solid var(--border);backdrop-filter:blur(6px);pointer-events:none}
+.compare .tagl{left:.9rem}.compare .tagr{right:.9rem}
+
+/* design-system specimen */
+.spec{padding:1.6rem}
+.spec-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
+.swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin-bottom:1.2rem}
+.swatches span{aspect-ratio:1;border-radius:10px;border:1px solid var(--border)}
+.spec-type{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.spec-type .s1{font-family:'Sora',sans-serif;font-size:3.2rem;line-height:1}
+.spec-type .s2{font-size:.92rem;color:#d6e0f5}
+.spec-type .s3{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.spec-kin{font-family:var(--kin);font-weight:900;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;color:var(--cyan);text-shadow:0 0 28px rgba(34,211,238,.5);margin:.4rem 0 1rem;white-space:nowrap;overflow:hidden}
+.spec-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.spec-foot .btn{padding:.5rem 1.1rem;font-size:.8rem}
+
+/* more builds */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:1.7rem 1.5rem;overflow:hidden;transition:transform .35s,border-color .35s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(22rem circle at var(--mx,50%) var(--my,0%),rgba(34,211,238,.13),transparent 45%);opacity:0;transition:opacity .35s;pointer-events:none}
+.card:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.45)}
+.card:hover::before{opacity:1}
+.card .ico{font-family:var(--mono);font-size:.72rem;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem;display:block}
+.card h4{font-family:'Sora',sans-serif;font-size:1.12rem;margin-bottom:.55rem}
+.card p{color:var(--muted);font-size:.92rem;margin-bottom:1rem}
+
+/* reel */
+.reels{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+@media(max-width:700px){.reels{grid-template-columns:1fr}}
+.reel-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border);background:#0a0f1c;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
+.reel-card.wide{grid-column:1/-1}
+.reel-card:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.5);box-shadow:0 20px 55px rgba(0,0,0,.55)}
+.reel-card img,.reel-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s}
+.reel-card:hover img{transform:scale(1.05);filter:brightness(.7)}
+.reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:1.3rem 1.4rem;background:linear-gradient(to top,rgba(5,7,13,.9) 0%,rgba(5,7,13,.1) 55%,transparent 100%)}
+.reel-card h3{font-size:1.2rem;margin-bottom:.15rem}
+.reel-card .meta{font-size:.83rem;color:#c3cfe8}
+.reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
+.reel-card:hover .play{transform:translate(-50%,-50%) scale(1.12);background:var(--grad);border-color:transparent}
+.reel-card .play svg{width:24px;height:24px;margin-left:4px;fill:#fff}
+.reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.6);backdrop-filter:blur(6px);border:1px solid var(--border)}
 
 /* about */
-.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:3.5rem;align-items:center}
-.about-grid p{color:var(--muted);font-size:1.05rem;margin-bottom:1.1rem}
-.about-grid p strong{color:var(--text);font-weight:500}
-.stat-cards{display:grid;gap:1rem}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.4rem 1.6rem}
-.stat b{display:block;font-family:'Sora',sans-serif;font-size:1.7rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat span{color:var(--muted);font-size:.88rem}
-@media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+.about{display:grid;grid-template-columns:1.35fr 1fr;gap:3.5rem;align-items:start}
+.about p{color:#b9c5de;font-size:1.05rem;margin-bottom:1.1rem}
+.about p strong{color:var(--text);font-weight:600}
+.facts{display:grid;gap:.9rem}
+.fact{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.2rem 1.4rem}
+.fact b{display:block;font-family:'Sora',sans-serif;font-size:1.25rem}
+.fact span{color:var(--muted);font-size:.88rem}
+@media(max-width:800px){.about{grid-template-columns:1fr}}
 
-/* work */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem}
-.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem 1.8rem;
-  transition:transform .35s,border-color .35s,background .35s;overflow:hidden}
-.card:hover{transform:translateY(-6px);border-color:rgba(209,96,74,.55);background:rgba(209,96,74,.08)}
-.card .icon{font-size:1.9rem;margin-bottom:1.1rem;display:block}
-.card h3{font-size:1.15rem;margin-bottom:.6rem}
-.card p{color:var(--muted);font-size:.93rem}
-.card .tags{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.45rem}
-.tag{font-size:.7rem;letter-spacing:.05em;padding:.28rem .7rem;border-radius:99px;border:1px solid var(--border);color:#c7bcab;background:rgba(255,255,255,.03)}
-
-/* skills */
-.skill-row{display:flex;flex-wrap:wrap;gap:.7rem}
-.skill{padding:.6rem 1.25rem;border-radius:99px;border:1px solid var(--border);background:var(--surface);
-  font-size:.9rem;color:#ded3c2;transition:border-color .25s,transform .25s}
-.skill:hover{border-color:var(--accent2);transform:translateY(-2px)}
+/* toolkit */
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem;margin-bottom:2.6rem}
+.group{border:1px solid var(--border);border-radius:18px;padding:1.3rem 1.3rem 1.1rem;background:var(--surface)}
+.group h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem}
+.group p{color:#d6e0f5;font-size:.9rem;line-height:1.75}
+.marquee{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee .track{display:flex;gap:2.6rem;width:max-content;animation:slide 38s linear infinite}
+.marquee span{font-family:'Sora',sans-serif;font-weight:600;font-size:1.25rem;color:#5d6a87;white-space:nowrap}
+.marquee span:nth-child(3n+1){color:#c9d6f2}
+@keyframes slide{to{transform:translateX(-50%)}}
 
 /* contact */
-.contact-box{text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:28px;
-  padding:clamp(2.5rem,6vw,4.5rem);position:relative;overflow:hidden}
-.contact-box::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:60%;height:80%;
-  background:radial-gradient(ellipse,rgba(226,166,60,.2),transparent 70%);pointer-events:none}
-.contact-box p{color:var(--muted);max-width:32rem;margin:0 auto 2rem}
+.contact{text-align:center;background:linear-gradient(160deg,rgba(18,28,54,.85),rgba(8,12,24,.9));border:1px solid var(--border);border-radius:28px;padding:clamp(2.5rem,6vw,4.5rem);position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;top:-45%;left:50%;transform:translateX(-50%);width:70%;height:90%;background:radial-gradient(ellipse,rgba(34,211,238,.2),transparent 70%);pointer-events:none}
+.contact p{color:var(--muted);max-width:34rem;margin:0 auto 2rem;position:relative}
+.contact .row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;position:relative}
+.contact .addr{margin-top:1.4rem;font-family:var(--mono);font-size:.82rem;color:#a9c3ff;position:relative}
 
-footer{text-align:center;padding:2.5rem 1rem 3rem;color:#6b6255;font-size:.82rem;border-top:1px solid var(--border)}
-
-/* showreel */
-.reels{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem}
-.reel-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border);
-  background:#14110c;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
-.reel-card:hover{transform:translateY(-6px);border-color:rgba(226,166,60,.55);box-shadow:0 20px 55px rgba(0,0,0,.55)}
-.reel-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s}
-.reel-card:hover img{transform:scale(1.06);filter:brightness(.68)}
-.reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:1.4rem 1.5rem;background:linear-gradient(to top,rgba(11,10,8,.9) 0%,rgba(11,10,8,.15) 55%,transparent 100%)}
-.reel-card h3{font-size:1.25rem;margin-bottom:.2rem}
-.reel-card .meta{font-size:.83rem;color:#d1c6b6}
-.reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
-  width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.13);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
-.reel-card:hover .play{transform:translate(-50%,-50%) scale(1.14);background:var(--grad);border-color:transparent}
-.reel-card .play svg{width:26px;height:26px;margin-left:4px;fill:#fff}
-.reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
-  padding:.32rem .75rem;border-radius:99px;background:rgba(11,10,8,.6);backdrop-filter:blur(6px);border:1px solid var(--border);color:#e6ddcf}
+footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bottom,0px));color:#5d6a87;font-size:.82rem;border-top:1px solid var(--border)}
 
 /* video modal */
-.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
-  padding:clamp(1rem,4vw,3rem);background:rgba(8,7,5,.88);backdrop-filter:blur(12px);opacity:0;transition:opacity .3s}
-.modal.open{display:flex;opacity:1}
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem);background:rgba(3,5,10,.9);backdrop-filter:blur(12px)}
+.modal.open{display:flex}
 .modal-inner{position:relative;width:min(1100px,100%)}
 .modal video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block;box-shadow:0 30px 80px rgba(0,0,0,.65)}
 .modal-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem;gap:1rem;flex-wrap:wrap}
 .modal-title{font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem}
 .modal-title .m{color:var(--muted);font-weight:400;font-size:.85rem;margin-left:.6rem}
 .modal-actions{display:flex;gap:.6rem;align-items:center}
-.toggle-sound,.modal-close{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);
-  border-radius:99px;font-size:.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;transition:.25s}
-.toggle-sound{padding:.55rem 1.05rem}
-.toggle-sound:hover,.modal-close:hover{border-color:var(--accent2);background:rgba(255,255,255,.11)}
-.toggle-sound.on{background:var(--grad);color:var(--ink);border-color:transparent;font-weight:600}
-.modal-close{width:40px;height:40px;padding:0;justify-content:center;font-size:1rem}
+.mbtn{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);border-radius:99px;font-size:.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.05rem;font-family:inherit}
+.mbtn.on{background:var(--grad);color:#021018;border-color:transparent;font-weight:600}
+.mclose{width:40px;height:40px;padding:0;justify-content:center}
 
-/* reveal animation */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1)}
 .reveal.in{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .hero .sub,.hero-cta{opacity:1}
+  .js .title[data-words]{visibility:visible}
+  .prompt{opacity:1}
+  .reveal{opacity:1;transform:none}
+  .pkt{display:none}
+}
 </style>
 </head>
 <body>
+<div class="ambient" aria-hidden="true"></div>
 
 <nav id="nav">
   <a class="logo" href="#top">MS<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="#showreel">Reel</a></li>
+    <li><a href="#builds">Builds</a></li>
+    <li><a href="#reel">Reel</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#toolkit">Toolkit</a></li>
+    <li><a class="cta" href="#contact">Hire me</a></li>
   </ul>
 </nav>
 
 <header class="hero" id="top">
-  <video autoplay muted loop playsinline disablepictureinpicture disableremoteplayback poster="" src="assets/hero.mp4"></video>
-  <div class="hero-content">
-    <span class="kicker">AI Technical Artist · Agentic AI Engineer</span>
+  <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg" disablepictureinpicture disableremoteplayback src="assets/hero-cut.mp4"></video>
+  <div class="flash" id="heroFlash" aria-hidden="true"></div>
+  <div class="hud" aria-hidden="true">
+    <i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br bq"></i>
+    <div class="rec"><b></b>REC <span id="tc">00:00:00:00</span></div>
+    <div class="shot">Shot <em id="shotN">01</em>/06 · <span id="shotTag">Action</span></div>
+    <div class="lower"><div class="lw" id="lowerWord"></div><div class="lc" id="lowerChip"></div></div>
+    <div class="scan" id="scan"></div>
+  </div>
+  <div class="hero-inner">
+    <span class="pill"><span class="dot" aria-hidden="true"></span>Open to new roles · Tampa or remote · Active U.S. government clearance</span>
     <h1>Matthew Stephen's<br><span class="grad">Portfolio</span></h1>
-    <p>Senior AI Technical Artist and Agentic AI Engineer, building generative pipelines and cinematic AI visuals with both local and cloud-based tools.</p>
+    <p class="sub"><strong>Generative AI engineer, agentic systems developer and creative technologist.</strong> Navy veteran. I train the models, wire up the agents and finish the pixels.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary shine" href="#showreel">View My Work</a>
-      <a class="btn btn-ghost" href="#contact">Get In Touch</a>
+      <a class="btn btn-primary" href="#builds">See what I've built</a>
+      <a class="btn btn-ghost" href="#reel">Watch the full film</a>
     </div>
   </div>
-  <a class="scroll-hint" href="#about" aria-label="Scroll down">↓</a>
+  <a class="scroll-hint" href="#stats" aria-label="Scroll down"></a>
 </header>
 
-<section id="showreel">
-  <div class="section-label reveal">01 - Showreel</div>
-  <h2 class="section-title reveal">Cinematic AI, <span class="grad">in motion.</span></h2>
-  <div class="reels">
-    <div class="reel-card reveal" data-src="assets/lunalove-showcase.mp4" data-title="Luna Love" data-meta="Cinematic AI Promo presented during SOF Week 2026">
-      <img src="assets/poster-lunalove.jpg" alt="Luna Love - cinematic AI promo" loading="lazy">
-      <span class="badge">Short Film</span>
-      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>Luna Love</h3><div class="meta">Cinematic AI Promo presented during SOF Week 2026</div></div>
+<div class="stats" id="stats">
+  <div class="stats-grid reveal">
+    <div class="stat"><b><span class="count" data-to="200">0</span>%</b><span>team output from my gen-AI pipelines</span></div>
+    <div class="stat"><b><span class="count" data-to="10">0</span>+</b><span>open models in one desktop app I built</span></div>
+    <div class="stat"><b><span class="count" data-to="3">0</span></b><span>AI agents working in parallel, unattended</span></div>
+    <div class="stat"><b><span class="count" data-to="12">0</span> yrs</b><span>design, video and 3D craft</span></div>
+  </div>
+</div>
+
+<div class="band" id="band" role="img" aria-label="Kinetic type: a prompt asks for an AI studio, an agent fleet and a smart theater; then the words Designed, Coded, Shipped, Solo.">
+  <div class="cap" id="bandCap" aria-hidden="true"></div>
+  <div class="prompt" id="prompt" aria-hidden="true"><div class="ph">THE PROMPT:</div><div class="pt" id="ptext"></div></div>
+  <div class="big" id="big" aria-hidden="true"></div>
+  <div class="flash" id="bandFlash" aria-hidden="true"></div>
+</div>
+
+<section id="builds">
+  <div class="label reveal">01 / Builds</div>
+  <h2 class="title reveal">Systems I've <span class="grad">built.</span></h2>
+  <p class="lede reveal">Not demos. Working systems I designed, coded and run every day, from multi-agent automation to a full desktop AI studio.</p>
+
+  <!-- Case 1: agents -->
+  <article class="case">
+    <div class="case-text reveal">
+      <div class="kick">MULTI-AGENT AUTOMATION · PYTHON · CLAUDE CODE · GITHUB API</div>
+      <h3>Agentic Command Center</h3>
+      <p>I talk to an AI in my car. By the time I park, the work is done on my PC. Voice requests land in a GitHub inbox, and a self-healing Python supervisor runs each one as an autonomous Claude Code agent that plans, reports every step and pings my phone when it's finished or needs a decision.</p>
+      <ul class="ticks">
+        <li>Up to three agents in parallel, with per-repository locks</li>
+        <li>Pauses and resumes around usage limits; retries failures</li>
+        <li>Watchdog, usage monitor and Google Drive mirroring for voice access</li>
+        <li>Writes the 4:45 AM briefing I listen to on the drive in</li>
+      </ul>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Bash</span><span class="tag">Claude Code</span><span class="tag">GitHub API</span><span class="tag">ntfy</span><span class="tag">~4,500 lines</span></div>
     </div>
-    <div class="reel-card reveal" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Various generative AI scenes">
+    <div class="case-media reveal" aria-label="Animated diagram: voice requests flow through an inbox and supervisor to three parallel AI agents">
+      <div class="diagram">
+        <svg viewBox="0 0 560 362" role="img" aria-hidden="true">
+          <path id="rA" class="wire" d="M120 180 H400 C418 180 418 70 436 70"/>
+          <path id="rB" class="wire" d="M120 180 H436"/>
+          <path id="rC" class="wire" d="M120 180 H400 C418 180 418 290 436 290"/>
+          <path id="rO" class="wire" d="M344 210 V290"/>
+          <g class="node"><rect x="16" y="150" width="104" height="60" rx="12"/><text x="68" y="177" text-anchor="middle">Voice</text><text class="s" x="68" y="195" text-anchor="middle">car · phone</text></g>
+          <g class="node"><rect x="152" y="150" width="104" height="60" rx="12"/><text x="204" y="177" text-anchor="middle">Inbox</text><text class="s" x="204" y="195" text-anchor="middle">GitHub issues</text></g>
+          <g class="node"><rect x="288" y="150" width="112" height="60" rx="12"/><text x="344" y="177" text-anchor="middle">Supervisor</text><text class="s" x="344" y="195" text-anchor="middle">self-healing</text></g>
+          <g class="node agent"><rect x="436" y="40" width="108" height="60" rx="12"/><text x="490" y="67" text-anchor="middle">Agent 1</text><text class="s" x="490" y="85" text-anchor="middle">Claude Code</text></g>
+          <g class="node agent"><rect x="436" y="150" width="108" height="60" rx="12"/><text x="490" y="177" text-anchor="middle">Agent 2</text><text class="s" x="490" y="195" text-anchor="middle">Claude Code</text></g>
+          <g class="node agent"><rect x="436" y="260" width="108" height="60" rx="12"/><text x="490" y="287" text-anchor="middle">Agent 3</text><text class="s" x="490" y="305" text-anchor="middle">Claude Code</text></g>
+          <g class="node"><rect x="268" y="290" width="152" height="60" rx="12"/><text x="344" y="317" text-anchor="middle">Outputs</text><text class="s" x="344" y="335" text-anchor="middle">push · Drive · briefing</text></g>
+          <circle class="pkt" r="4.5"><animateMotion dur="3s" repeatCount="indefinite" begin="0s"><mpath href="#rA"/></animateMotion></circle>
+          <circle class="pkt" r="4.5"><animateMotion dur="3s" repeatCount="indefinite" begin="1s"><mpath href="#rB"/></animateMotion></circle>
+          <circle class="pkt" r="4.5"><animateMotion dur="3s" repeatCount="indefinite" begin="2s"><mpath href="#rC"/></animateMotion></circle>
+          <circle class="pkt" r="3.5"><animateMotion dur="1.5s" repeatCount="indefinite" begin=".5s"><mpath href="#rO"/></animateMotion></circle>
+        </svg>
+      </div>
+      <div class="term" id="term"><div class="bar"><i></i><i></i><i></i></div></div>
+    </div>
+  </article>
+
+  <!-- Case 2: studio -->
+  <article class="case">
+    <div class="case-text reveal">
+      <div class="kick">FOUNDER & SOLE DEVELOPER · FASTAPI · REACT · COMFYUI · TAURI</div>
+      <h3>SaberClaw: a local AI creative studio</h3>
+      <p>A professional AI studio that runs entirely on your own GPU: no cloud, no per-generation cost, nothing leaves the machine. Image, video, voice and music generation, a LoRA trainer, a timeline editor and an on-device assistant, behind one interface built for people who never want to see a node graph.</p>
+      <ul class="ticks">
+        <li>10+ open models orchestrated behind one UI (LTX 2.5 video, Qwen-Image-Edit, Wan 2.2 and more)</li>
+        <li>Turns one reference photo into a full, varied LoRA training set and picks the best checkpoint automatically</li>
+        <li>On-device assistant (Gemma via Ollama) that knows the app's own tools</li>
+        <li>Packaged as a native desktop app for pre-built RTX workstations</li>
+      </ul>
+      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">ComfyUI</span><span class="tag">AI-Toolkit</span><span class="tag">Ollama</span><span class="tag">CUDA</span></div>
+    </div>
+    <div class="case-media reveal">
+      <div class="studio">
+        <div class="studio-head"><img src="assets/builds/saberclaw-logo.png" alt="SaberClaw logo" width="58" height="58"><div><b>Saber<span>Claw</span></b><small>Local inference · no cloud · no account</small></div></div>
+        <div class="feat" id="feat">
+          <div><i>Image</i>Text to image</div>
+          <div><i>Image</i>Instruction edit</div>
+          <div><i>Image</i>Comics</div>
+          <div><i>Video</i>Text to video</div>
+          <div><i>Video</i>Character video</div>
+          <div><i>Video</i>Video edit</div>
+          <div><i>Video</i>Lip sync</div>
+          <div><i>Video</i>Character swap</div>
+          <div><i>Audio</i>Voice clone</div>
+          <div><i>Audio</i>Music maker</div>
+          <div><i>Train</i>One-photo LoRA</div>
+          <div><i>Edit</i>Timeline</div>
+        </div>
+        <div class="studio-foot"><span><b>~14K</b> lines</span><span><b>126</b> commits</span><span><b>RTX 5090</b> native</span></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Case 3: home -->
+  <article class="case">
+    <div class="case-text reveal">
+      <div class="kick">BLENDER PYTHON · THREE.JS · HOME ASSISTANT (NEXT)</div>
+      <h3>Comfy Town: an AI-planned smart theater</h3>
+      <p>I rebuilt my living room procedurally in Blender from tape-measure numbers, so every purchase was proven in 3D before I bought it: screen size, throw distance, curtain fullness, couch clearance. AI agents keep the plan, budget and checklist in sync. Next, the same agents run the room, with one "movie night" command for curtains, lights and projector.</p>
+      <ul class="ticks">
+        <li>Procedural room model and renders, scripted in Blender Python</li>
+        <li>Interactive three.js walkthrough of every layout option</li>
+        <li>Home Assistant + motorized curtains on the roadmap</li>
+      </ul>
+      <div class="tags"><span class="tag">Blender</span><span class="tag">Python</span><span class="tag">three.js</span><span class="tag">Home Assistant</span></div>
+    </div>
+    <div class="case-media reveal">
+      <div class="compare" id="compare">
+        <img src="assets/builds/comfytown-day.jpg" alt="3D render of the living room theater in daylight" loading="lazy">
+        <img class="top" src="assets/builds/comfytown-night.jpg" alt="The same 3D render in movie-night mode, curtains closed and the screen lit" loading="lazy">
+        <span class="tagl">Daylight</span><span class="tagr">Movie night</span>
+        <div class="handle"></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Drag to compare daylight and movie-night renders">
+      </div>
+    </div>
+  </article>
+
+  <!-- Case 4: this site -->
+  <article class="case">
+    <div class="case-text reveal">
+      <div class="kick">UI/UX · WEB DESIGN · HTML · CSS · JAVASCRIPT · MOTION</div>
+      <h3>This site: designed and coded from scratch</h3>
+      <p>No template and no framework. I designed the system (type, color, motion) and hand-built every interaction you've seen: the hero graphics that follow the film's own timecode, the kinetic type engine, the animated agent diagram and the day/night slider.</p>
+      <ul class="ticks">
+        <li>Kinetic type engine: slam-in letters, motion-blur whip-outs and variable-font stretch, in plain JavaScript</li>
+        <li>Hero graphics synced frame by frame to the background video</li>
+        <li>Loads light: a 2 MB hero loop, one HTML file, no libraries</li>
+        <li>Responsive from phone to 4K, and calm for visitors who turn motion off</li>
+      </ul>
+      <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">SVG</span><span class="tag">Web Animations</span><span class="tag">Vercel</span></div>
+      <p style="margin-top:1.2rem"><a class="btn btn-ghost" href="https://github.com/MISTERNEFF/matthew-stephen-portfolio" target="_blank" rel="noopener">View the code on GitHub</a></p>
+    </div>
+    <div class="case-media reveal">
+      <div class="spec">
+        <div class="spec-label">Design system</div>
+        <div class="swatches"><span style="background:#05070d"></span><span style="background:#0a1020"></span><span style="background:#4f8cff"></span><span style="background:#22d3ee"></span><span style="background:#f5a524"></span><span style="background:#eef3ff"></span></div>
+        <div class="spec-type"><b class="s1">Aa</b><div><div class="s2">Sora · Inter · Archivo · JetBrains Mono</div><div class="s3">Display / text / kinetic / code</div></div></div>
+        <div class="spec-kin" id="specKin">STRETCH.</div>
+        <div class="spec-foot"><span>ease cubic-bezier(.2,.9,.25,1) · 250 ms · stagger 28 ms</span><button class="btn btn-primary" id="replay" type="button">Replay</button></div>
+      </div>
+    </div>
+  </article>
+
+  <h3 class="reveal" style="font-size:1.4rem;margin-bottom:1.4rem">More builds</h3>
+  <div class="cards">
+    <div class="card reveal"><span class="ico">Desktop app · security</span><h4>ClipCleanse</h4><p>A macOS and Windows app that watches the clipboard for card numbers, Social Security numbers, API keys and AWS keys, then wipes them after a 30-second countdown. Shipped with a Stripe checkout, a pickup-code download flow and automated release builds.</p><div class="tags"><span class="tag">Tauri</span><span class="tag">Rust</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Stripe</span></div></div>
+    <div class="card reveal"><span class="ico">AI web app</span><h4>Instant Brand Palette</h4><p>Describe a brand and get a cohesive color palette and font pairing, with the reasoning behind every choice and a live preview, in a responsive Next.js app powered by OpenAI.</p><div class="tags"><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">OpenAI API</span></div></div>
+    <div class="card reveal"><span class="ico">Model training</span><h4>LoRA training studio</h4><p>Custom character and style LoRAs on Kohya and AI-Toolkit: dataset building, captioning, tuned configs and automatic best-checkpoint selection.</p><div class="tags"><span class="tag">AI-Toolkit</span><span class="tag">Kohya</span><span class="tag">Qwen-Image</span></div></div>
+    <div class="card reveal"><span class="ico">Generative video</span><h4>Cinematic AI films</h4><p>Text-to-video and image-to-video production, then directed, cut, graded and finished by hand, like the AI movie-star promo below.</p><div class="tags"><span class="tag">Higgsfield</span><span class="tag">Kling</span><span class="tag">Seedance</span><span class="tag">DaVinci</span></div></div>
+    <div class="card reveal"><span class="ico">Reverse engineering</span><h4>Game engine mod</h4><p>A C++ DLL-proxy mod that adds skateboarding, a third-person camera and a live DJ simulation to a commercial game that was never built to be modded, by mapping the engine from the binary.</p><div class="tags"><span class="tag">C++</span><span class="tag">DLL proxy</span><span class="tag">Reverse engineering</span></div></div>
+    <div class="card reveal"><span class="ico">Audio AI</span><h4>AI song repair toolkit</h4><p>Stem separation, Whisper lyric scoring and voice conversion to fix AI-generated songs line by line instead of regenerating them.</p><div class="tags"><span class="tag">Whisper</span><span class="tag">RoFormer</span><span class="tag">Seed-VC</span></div></div>
+  </div>
+</section>
+
+<section id="reel">
+  <div class="label reveal">02 / Reel</div>
+  <h2 class="title reveal">Cinematic AI, <span class="grad">in motion.</span></h2>
+  <div class="reels">
+    <div class="reel-card wide reveal" data-src="assets/motion-reel.mp4" data-title="Motion Reel" data-meta="Kinetic type and motion graphics, made with Higgsfield Katana">
+      <video class="pv" muted loop playsinline preload="none" poster="assets/motion-reel-poster.jpg" data-src="assets/motion-reel-preview.mp4" aria-hidden="true"></video>
+      <span class="badge">Motion graphics</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>Motion Reel</h3><div class="meta">Kinetic type and motion graphics, made with Higgsfield Katana. Click for sound.</div></div>
+    </div>
+    <div class="reel-card reveal" data-src="assets/ai-movie-star.mp4" data-title="AI Movie Star" data-meta="Cinematic promo starring an AI-generated movie star, presented during SOF Week 2026">
+      <img src="assets/poster-movie-star.jpg" alt="Cinematic promo starring an AI-generated movie star" loading="lazy">
+      <span class="badge">Short film</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>AI Movie Star</h3><div class="meta">Cinematic promo presented during SOF Week 2026</div></div>
+    </div>
+    <div class="reel-card reveal" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Generative AI scenes">
       <img src="assets/poster-reel.jpg" alt="AI generative video showreel" loading="lazy">
       <span class="badge">Showreel</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>AI Showreel</h3><div class="meta">Various generative AI scenes</div></div>
+      <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes</div></div>
     </div>
   </div>
 </section>
 
 <section id="about">
-  <div class="section-label reveal">02 - About</div>
-  <div class="about-grid">
+  <div class="label reveal">03 / About</div>
+  <div class="about">
     <div class="reveal">
-      <h2 class="section-title">AI Technical Artist,<br><span class="grad">Agentic AI Engineer.</span></h2>
-      <p>I'm Matthew, a Senior AI Technical Artist and Agentic AI Engineer with an active U.S. government clearance. I work where machine learning meets visual craft, building generative pipelines from model training to the interfaces people actually use.</p>
-      <p>I run <strong>several AI creative pipelines</strong> at once and have grown output by 200%, mixing local tools like ComfyUI and AI-Toolkit with cloud generators like Kling and Higgsfield, then shipping full-stack tools that turn the results into finished deliverables.</p>
-      <p>The film playing behind the headline above? <strong>Generated end-to-end with AI</strong>, then directed, curated, and finished by hand.</p>
+      <h2 class="title">Design was my first language. <span class="grad">AI is my second.</span></h2>
+      <p>I'm Matthew: Navy veteran, former Operations Specialist, and for the last four years the person who brought generative AI into production on a government contract. I <strong>train the models, build the pipelines and the internal tools around them</strong>, and my team's output grew 200%.</p>
+      <p>Outside work I build the same way: products, agents and systems that run themselves. Twelve years of illustration, video and 3D mean what I ship is <strong>finished, not just functional</strong>.</p>
+      <p>I'm looking for a role where both halves count: AI engineering, agentic systems or creative technology, on a team that wants someone who can take an idea from model to pixel.</p>
     </div>
-    <div class="stat-cards reveal">
-      <div class="stat"><b>200%</b><span>Output growth through AI-driven creative pipelines</span></div>
-      <div class="stat"><b>Local + Cloud</b><span>Diffusion &amp; LLM pipelines, self-hosted and online</span></div>
-      <div class="stat"><b>Cleared</b><span>Active U.S. government clearance, veteran</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="work">
-  <div class="section-label reveal">03 - Selected Work</div>
-  <h2 class="section-title reveal">Things I've <span class="grad">built.</span></h2>
-  <div class="cards">
-    <div class="card reveal">
-      <span class="icon">🎛️</span>
-      <h3>LoRA Training Studio</h3>
-      <p>A tool I built for training custom LoRA models: dataset management, captioning, training orchestration, and one-click inference testing.</p>
-      <div class="tags"><span class="tag">Python</span><span class="tag">AI-Toolkit</span><span class="tag">Diffusion</span><span class="tag">CUDA</span></div>
-    </div>
-    <div class="card reveal">
-      <span class="icon">🎬</span>
-      <h3>Cinematic AI Videos</h3>
-      <p>AI-generated short-form video production: text-to-video and image-to-video pipelines with post-processing, upscaling, and color grading.</p>
-      <div class="tags"><span class="tag">Higgsfield</span><span class="tag">Kling</span><span class="tag">Seedance</span></div>
-    </div>
-    <div class="card reveal">
-      <span class="icon">🖼️</span>
-      <h3>Image Generation Workflows</h3>
-      <p>Production ComfyUI workflows for text-to-image, image editing, and character-consistent generation, with tuned node graphs and custom post-processing.</p>
-      <div class="tags"><span class="tag">Qwen-Image</span><span class="tag">SDXL</span><span class="tag">Node Graphs</span></div>
-    </div>
-    <div class="card reveal">
-      <span class="icon">🤖</span>
-      <h3>Local LLM Systems</h3>
-      <p>Self-hosted language model deployments: persona-driven chat backends, prompt engineering, and fine-tuning strategies for consumer GPUs.</p>
-      <div class="tags"><span class="tag">Ollama</span><span class="tag">Fine-Tuning</span><span class="tag">Claude Code</span></div>
+    <div class="facts reveal">
+      <div class="fact"><b>Cleared &amp; veteran</b><span>Active U.S. government clearance · U.S. Navy, 2010–2014</span></div>
+      <div class="fact"><b>Local + cloud</b><span>Self-hosted diffusion and LLMs on an RTX 5090, plus Kling, Higgsfield and Claude</span></div>
+      <div class="fact"><b>Full stack</b><span>Python, FastAPI, React, Bash, Git, from GPU pipelines to the UI people use</span></div>
     </div>
   </div>
 </section>
 
-<section id="skills">
-  <div class="section-label reveal">04 - Toolkit</div>
-  <h2 class="section-title reveal">Skills &amp; <span class="grad">stack.</span></h2>
-  <div class="skill-row reveal">
-    <span class="skill">Adobe Creative Suite</span><span class="skill">DaVinci Resolve</span><span class="skill">Blender</span>
-    <span class="skill">Unreal Engine</span><span class="skill">ComfyUI</span><span class="skill">LoRA Training</span>
-    <span class="skill">Higgsfield</span><span class="skill">Kling</span><span class="skill">Seedance</span>
-    <span class="skill">Claude Code</span><span class="skill">Prompt Engineering</span><span class="skill">Model Evaluation</span>
+<section id="toolkit">
+  <div class="label reveal">04 / Toolkit</div>
+  <h2 class="title reveal">Skills &amp; <span class="grad">stack.</span></h2>
+  <div class="groups">
+    <div class="group reveal"><h4>Generative AI</h4><p>ComfyUI · diffusion (Qwen-Image, Krea, LTX, Wan) · LoRA fine-tuning (Kohya, AI-Toolkit) · synthetic training data · image-to-video · lip sync · voice cloning · model evaluation · prompt engineering</p></div>
+    <div class="group reveal"><h4>Agentic AI &amp; LLMs</h4><p>Claude Code · multi-agent orchestration · autonomous task queues · LLM APIs · MCP tools · local LLMs (Ollama, Gemma) · on-device assistants</p></div>
+    <div class="group reveal"><h4>Software</h4><p>Python · JavaScript/TypeScript · FastAPI · React · REST APIs · Bash · Git/GitHub · Linux/WSL · Tauri · three.js · Blender Python · CUDA workstations</p></div>
+    <div class="group reveal"><h4>Media &amp; 3D</h4><p>Photoshop · Illustrator · Premiere Pro · After Effects · InDesign · DaVinci Resolve · Blender · Unreal Engine · motion graphics · illustration</p></div>
   </div>
+  <div class="marquee reveal" aria-hidden="true"><div class="track" id="track">
+    <span>ComfyUI</span><span>Claude Code</span><span>LoRA training</span><span>FastAPI</span><span>React</span><span>Higgsfield</span><span>Kling</span><span>Ollama</span><span>Blender</span><span>Unreal</span><span>DaVinci Resolve</span><span>After Effects</span><span>Python</span><span>three.js</span>
+  </div></div>
 </section>
 
 <section id="contact">
-  <div class="contact-box reveal">
-    <div class="section-label">05 - Contact</div>
-    <h2 class="section-title" style="margin-bottom:1rem">Let's make something <span class="grad">unreal.</span></h2>
-    <p>Open to full-time AI design and engineering roles, plus select freelance projects. I'd love to hear from you.</p>
-    <a class="btn btn-primary" href="mailto:matthew.james.stephen.work@gmail.com">Say Hello</a>
+  <div class="contact reveal">
+    <div class="label">05 / Contact</div>
+    <h2 class="title" style="position:relative">Let's build something <span class="grad">unreal.</span></h2>
+    <p>Open to AI engineering, agentic systems and creative technologist roles. Cleared work welcome. Tampa or remote.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="mailto:matthew.james.stephen.work@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/matthew-james-stephen" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="addr">matthew.james.stephen.work@gmail.com</div>
   </div>
 </section>
 
@@ -269,66 +568,273 @@ footer{text-align:center;padding:2.5rem 1rem 3rem;color:#6b6255;font-size:.82rem
     <div class="modal-bar">
       <div class="modal-title"><span id="modalTitle">Video</span><span class="m" id="modalMeta"></span></div>
       <div class="modal-actions">
-        <button class="toggle-sound on" id="soundToggle" type="button" aria-pressed="true">
-          <span id="soundIcon">🔊</span><span id="soundLabel">Sound On</span>
-        </button>
-        <button class="modal-close" id="modalClose" type="button" aria-label="Close video">✕</button>
+        <button class="mbtn on" id="soundToggle" type="button" aria-pressed="true"><span id="soundIcon">🔊</span><span id="soundLabel">Sound on</span></button>
+        <button class="mbtn mclose" id="modalClose" type="button" aria-label="Close video">✕</button>
       </div>
     </div>
     <video id="modalVideo" controls playsinline preload="metadata"></video>
   </div>
 </div>
 
-<footer>© 2026 Matthew Stephen · Designed &amp; built with AI-assisted craft</footer>
+<footer>© 2026 Matthew Stephen · Designed and built with AI-assisted craft</footer>
 
 <script>
-const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive: true});
 
-// ---------- Video modal ----------
-const modal=document.getElementById('videoModal');
-const mVideo=document.getElementById('modalVideo');
-const mTitle=document.getElementById('modalTitle');
-const mMeta=document.getElementById('modalMeta');
-const sBtn=document.getElementById('soundToggle');
-const sIcon=document.getElementById('soundIcon');
-const sLabel=document.getElementById('soundLabel');
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-function setSound(on){
-  mVideo.muted=!on;
-  sBtn.classList.toggle('on',on);
-  sBtn.setAttribute('aria-pressed',String(on));
-  sIcon.textContent=on?'🔊':'🔇';
-  sLabel.textContent=on?'Sound On':'Muted';
+// ---------- kinetic type engine ----------
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SLAM = [
+  {transform: 'translateY(.5em) scaleY(1.9) scaleX(.62)', filter: 'blur(8px)', opacity: 0},
+  {transform: 'translateY(-.05em) scaleY(.9) scaleX(1.07)', filter: 'blur(0px)', opacity: 1, offset: .65},
+  {transform: 'none', filter: 'blur(0px)', opacity: 1}
+];
+function splitChars(el, text) {
+  el.textContent = '';
+  text.split(' ').forEach((word, wi) => {
+    if (wi) el.append(' ');
+    const w = document.createElement('span'); w.className = 'wd';
+    for (const c of word) { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; w.append(s); }
+    el.append(w);
+  });
+  return [...el.querySelectorAll('.ch')];
 }
-function openModal(card){
-  mVideo.src=card.dataset.src;
-  mTitle.textContent=card.dataset.title;
-  mMeta.textContent=card.dataset.meta;
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-  setSound(true);                 // start with sound (click is a user gesture)
-  const p=mVideo.play();
-  if(p&&p.catch)p.catch(()=>{setSound(false);mVideo.play();}); // fallback if browser blocks audio autoplay
+function slamIn(units, stagger = 28, dur = 250) {
+  units.forEach((u, i) => u.animate(SLAM, {duration: dur, delay: i * stagger, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'both'}));
+  return sleep(dur + Math.max(0, units.length - 1) * stagger);
 }
-function closeModal(){
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-  mVideo.pause();
-  mVideo.removeAttribute('src');
-  mVideo.load();
+function whipOut(el, dir = -1) {
+  return el.animate([
+    {transform: 'none', filter: 'blur(0px)', opacity: 1},
+    {transform: `translateX(${dir * 38}%) skewX(${dir * 26}deg) scaleX(1.7)`, filter: 'blur(16px)', opacity: 0}
+  ], {duration: 130, easing: 'cubic-bezier(.6,0,.9,.4)', fill: 'forwards'});
+  return sleep(130);
 }
-document.querySelectorAll('.reel-card').forEach(c=>{
-  c.addEventListener('click',()=>openModal(c));
-});
-sBtn.addEventListener('click',()=>setSound(mVideo.muted));
-document.getElementById('modalClose').addEventListener('click',closeModal);
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+function flash(f, d = 280) { if (f) f.animate([{opacity: 0}, {opacity: 1, offset: .2}, {opacity: 0}], {duration: d, easing: 'ease-out'}); }
+function reset(el) { el.getAnimations().forEach(a => a.cancel()); }
+document.documentElement.classList.add('js');
+
+// hero: graphics synced to the background video's own timecode
+(() => {
+  const v = document.getElementById('heroVid');
+  const tc = document.getElementById('tc'), shotN = document.getElementById('shotN'), shotTag = document.getElementById('shotTag');
+  const word = document.getElementById('lowerWord'), chip = document.getElementById('lowerChip');
+  const fl = document.getElementById('heroFlash'), scan = document.getElementById('scan');
+  const cues = [[0, 'Action.', 'AI film · shown at SOF Week 2026'], [1.4, 'Rock star.', 'One AI actor'], [3.2, 'Outlaw.', 'Any genre'],
+    [5.0, 'Pilot.', 'Consistent identity'], [6.8, 'Astronaut.', 'Any world'], [8.6, 'Villain.', 'Directed by hand']];
+  let cur = -1, queue = Promise.resolve(), last = 0;
+  const show = i => {
+    const [, w, c] = cues[i];
+    shotN.textContent = String(i + 1).padStart(2, '0'); shotTag.textContent = w.replace(/[.]$/, '');
+    if (reduce) { word.textContent = w; chip.textContent = c; return; }
+    queue = queue.then(async () => {
+      if (word.textContent) await whipOut(word, i % 2 ? 1 : -1);
+      reset(word); flash(fl, 220);
+      scan.animate([{transform: 'translateY(0)', opacity: 1}, {transform: 'translateY(100vh)', opacity: 0}], {duration: 420, easing: 'cubic-bezier(.4,0,.2,1)'});
+      chip.textContent = c;
+      chip.animate([{transform: 'translateX(-16px)', opacity: 0}, {transform: 'none', opacity: 1}], {duration: 220, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'both'});
+      await slamIn(splitChars(word, w), 26, 220);
+    });
+  };
+  const fmt = t => { const s = Math.floor(t), f = Math.floor((t - s) * 30), p = n => String(n).padStart(2, '0'); return `00:${p(Math.floor(s / 60))}:${p(s % 60)}:${p(f)}`; };
+  const tick = now => {
+    const t = v.currentTime || 0;
+    let i = 0; for (let k = 0; k < cues.length; k++) if (t >= cues[k][0]) i = k;
+    if (i !== cur) { cur = i; show(i); }
+    if (now - last > 80) { tc.textContent = fmt(t); last = now; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+})();
+
+// section titles: words slam in when they scroll into view
+(() => {
+  const titles = [...document.querySelectorAll('.title')];
+  titles.forEach(t => {
+    t.dataset.words = '';
+    const units = [];
+    [...t.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const parts = n.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        parts.forEach(p => { if (!p) return; if (/^\s+$/.test(p)) { frag.append(p); return; } const w = document.createElement('span'); w.className = 'w'; w.textContent = p; frag.append(w); units.push(w); });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) { n.classList.add('w'); units.push(n); }
+    });
+    t._units = units;
+  });
+  const o = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const t = e.target; o.unobserve(t); t.classList.add('in'); t.style.visibility = 'visible';
+    if (!reduce) slamIn(t._units, 70, 300);
+  }), {threshold: .4});
+  titles.forEach(t => o.observe(t));
+})();
+
+// kinetic band: typing prompt with keyword chips, then slammed words
+(() => {
+  const band = document.getElementById('band');
+  const prompt = document.getElementById('prompt'), pt = document.getElementById('ptext');
+  const big = document.getElementById('big'), cap = document.getElementById('bandCap'), fl = document.getElementById('bandFlash');
+  const segs = [['Build me a '], ['local AI studio', 1], [', an '], ['agent fleet', 1], [' and a '], ['smart theater', 1], ['.']];
+  const beats = [['designed.'], ['coded.'], ['shipped.', 'stretch'], ['solo.', 'acc']];
+  let visible = false, running = false;
+  if (reduce) {
+    pt.innerHTML = 'Build me a <mark class="on">local AI studio</mark>, an <mark class="on">agent fleet</mark> and a <mark class="on">smart theater</mark>.';
+    return;
+  }
+  async function type() {
+    pt.textContent = '';
+    const cur = document.createElement('span'); cur.className = 'cur';
+    for (const [txt, chip] of segs) {
+      const node = chip ? document.createElement('mark') : document.createElement('span');
+      pt.insertBefore(node, null); pt.append(cur);
+      for (const ch of txt) { node.textContent += ch; await sleep(26); }
+      if (chip) node.classList.add('on');
+    }
+  }
+  async function run() {
+    running = true;
+    while (visible) {
+      reset(prompt); big.textContent = ''; cap.textContent = '';
+      prompt.animate([{opacity: 0, transform: 'scale(.92)'}, {opacity: 1, transform: 'none'}], {duration: 180, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'forwards'});
+      await type(); await sleep(650);
+      await whipOut(prompt); flash(fl, 320);
+      for (let k = 0; k < beats.length && visible; k++) {
+        const [word, fx] = beats[k];
+        reset(big); big.style.fontStretch = '100%';
+        cap.innerHTML = beats.map(([w], j) => j === k ? `<mark>${w}</mark>` : w).join(' ');
+        const line = document.createElement('span'); if (fx === 'acc') line.className = 'acc'; big.textContent = ''; big.append(line);
+        const c = splitChars(line, word);
+        await slamIn(c, 30, 230);
+        if (fx === 'stretch') {
+          flash(fl, 360);
+          big.animate([{fontStretch: '100%'}, {fontStretch: '62%', offset: .25}, {fontStretch: '125%'}], {duration: 700, easing: 'cubic-bezier(.3,.9,.25,1)', fill: 'forwards'});
+          await sleep(700);
+          await sleep(500);
+        } else await sleep(520);
+        await whipOut(big, k % 2 ? 1 : -1);
+      }
+      await sleep(500);
+    }
+    running = false;
+  }
+  new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible && !running) run(); }), {threshold: .35}).observe(band);
+})();
+
+// count-up stats
+(() => {
+  const els = document.querySelectorAll('.count');
+  const run = el => {
+    const to = +el.dataset.to, t0 = performance.now(), d = reduce ? 1 : 900;
+    const step = t => { const p = Math.min(1, (t - t0) / d); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { run(e.target); o.unobserve(e.target); } }), {threshold: .6});
+  els.forEach(el => o.observe(el));
+})();
+
+// agent terminal log
+(() => {
+  const term = document.getElementById('term');
+  const lines = [
+    ['cmd', '$ car-tasks --status'],
+    ['', '▸ inbox/2026-11-05-research.md → issue #37'],
+    ['', '▸ agent 1 · plan posted · 4 steps'],
+    ['ok', '✓ step 1/4 · sources checked'],
+    ['', '▸ agent 2 · picked up queued task'],
+    ['ok', '✓ step 2/4 · plan + 3D model updated'],
+    ['wait', '⏸ usage limit · resumes 9:23 PM'],
+    ['ok', '✓ step 4/4 · pushed · phone notified'],
+  ];
+  const rows = [];
+  let n = 0;
+  const add = () => {
+    const [cls, txt] = lines[n % lines.length];
+    const div = document.createElement('div');
+    div.className = 'ln ' + cls; div.textContent = txt;
+    term.appendChild(div); rows.push(div);
+    if (rows.length > 6) rows.shift().remove();
+    n++;
+  };
+  if (reduce) { for (let k = 0; k < 6; k++) add(); return; }
+  add(); setInterval(add, 1300);
+})();
+
+// studio feature highlight cycle
+(() => {
+  const items = [...document.querySelectorAll('#feat div')];
+  if (reduce || !items.length) return;
+  let i = 0;
+  setInterval(() => { items.forEach(d => d.classList.remove('lit')); items[i].classList.add('lit'); i = (i + 1) % items.length; }, 900);
+})();
+
+// compare slider
+(() => {
+  const c = document.getElementById('compare');
+  const r = c.querySelector('input');
+  const set = v => c.style.setProperty('--pos', v + '%');
+  r.addEventListener('input', () => set(r.value));
+  set(r.value);
+})();
+
+// card spotlight
+document.querySelectorAll('.card').forEach(card => card.addEventListener('pointermove', e => {
+  const b = card.getBoundingClientRect();
+  card.style.setProperty('--mx', (e.clientX - b.left) + 'px');
+  card.style.setProperty('--my', (e.clientY - b.top) + 'px');
+}));
+
+// design-system specimen: replay the kinetic type
+(() => {
+  const k = document.getElementById('specKin'), b = document.getElementById('replay');
+  const play = () => {
+    if (reduce) return;
+    reset(k); k.style.fontStretch = '100%';
+    slamIn(splitChars(k, 'STRETCH.'), 30, 240).then(() => k.animate([{fontStretch: '100%'}, {fontStretch: '62%', offset: .3}, {fontStretch: '125%'}, {fontStretch: '100%'}], {duration: 1100, easing: 'cubic-bezier(.3,.9,.25,1)'}));
+  };
+  b.addEventListener('click', play);
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { play(); o.disconnect(); } }), {threshold: .5}).observe(k);
+})();
+
+// marquee: duplicate track for a seamless loop
+(() => { const t = document.getElementById('track'); t.innerHTML += t.innerHTML; })();
+
+// reel previews: load and play only while on screen
+(() => {
+  const vids = [...document.querySelectorAll('video.pv')];
+  if (reduce) return;
+  const o = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+    else v.pause();
+  }), {threshold: .35});
+  vids.forEach(v => o.observe(v));
+})();
+
+// video modal
+const modal = document.getElementById('videoModal'), mVideo = document.getElementById('modalVideo');
+const mTitle = document.getElementById('modalTitle'), mMeta = document.getElementById('modalMeta');
+const sBtn = document.getElementById('soundToggle'), sIcon = document.getElementById('soundIcon'), sLabel = document.getElementById('soundLabel');
+function setSound(on) { mVideo.muted = !on; sBtn.classList.toggle('on', on); sBtn.setAttribute('aria-pressed', String(on)); sIcon.textContent = on ? '🔊' : '🔇'; sLabel.textContent = on ? 'Sound on' : 'Muted'; }
+function openModal(card) {
+  document.querySelectorAll('video.pv').forEach(v => v.pause());
+  mVideo.src = card.dataset.src; mTitle.textContent = card.dataset.title; mMeta.textContent = card.dataset.meta;
+  modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+  setSound(true);
+  const p = mVideo.play(); if (p && p.catch) p.catch(() => { setSound(false); mVideo.play(); });
+}
+function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; mVideo.pause(); mVideo.removeAttribute('src'); mVideo.load(); }
+document.querySelectorAll('.reel-card').forEach(c => c.addEventListener('click', () => openModal(c)));
+sBtn.addEventListener('click', () => setSound(mVideo.muted));
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 </script>
 </body>
 </html>
