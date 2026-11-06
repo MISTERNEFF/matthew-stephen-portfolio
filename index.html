@@ -357,9 +357,45 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 <section id="builds">
   <div class="label reveal">01 / Builds</div>
   <h2 class="title reveal">Systems I've <span class="grad">built.</span></h2>
-  <p class="lede reveal">Not demos. Working systems I designed, coded and run every day, from multi-agent automation to a full desktop AI studio.</p>
+  <p class="lede reveal">Not demos. Working systems I designed, coded and run every day, from a full desktop AI studio to multi-agent automation.</p>
 
-  <!-- Case 1: agents -->
+  <!-- Case 1: studio -->
+  <article class="case">
+    <div class="case-text reveal">
+      <div class="kick">FOUNDER & SOLE DEVELOPER · FASTAPI · REACT · COMFYUI · TAURI</div>
+      <h3>SaberClaw: a local AI creative studio</h3>
+      <p>A professional AI studio that runs entirely on your own GPU: no cloud, no per-generation cost, nothing leaves the machine. Image, video, voice and music generation, a LoRA trainer, a timeline editor and an on-device assistant, behind one interface built for people who never want to see a node graph.</p>
+      <ul class="ticks">
+        <li>10+ open models orchestrated behind one UI (LTX 2.5 video, Qwen-Image-Edit, Wan 2.2 and more)</li>
+        <li>Turns one reference photo into a full, varied LoRA training set and picks the best checkpoint automatically</li>
+        <li>On-device assistant (Gemma via Ollama) that knows the app's own tools</li>
+        <li>Packaged as a native desktop app for pre-built RTX workstations</li>
+      </ul>
+      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">ComfyUI</span><span class="tag">AI-Toolkit</span><span class="tag">Ollama</span><span class="tag">CUDA</span></div>
+    </div>
+    <div class="case-media reveal">
+      <div class="studio">
+        <div class="studio-head"><img src="assets/builds/saberclaw-logo.png" alt="SaberClaw logo" width="58" height="58"><div><b>Saber<span>Claw</span></b><small>Local inference · no cloud · no account</small></div></div>
+        <div class="feat" id="feat">
+          <div><i>Image</i>Text to image</div>
+          <div><i>Image</i>Instruction edit</div>
+          <div><i>Image</i>Comics</div>
+          <div><i>Video</i>Text to video</div>
+          <div><i>Video</i>Character video</div>
+          <div><i>Video</i>Video edit</div>
+          <div><i>Video</i>Lip sync</div>
+          <div><i>Video</i>Character swap</div>
+          <div><i>Audio</i>Voice clone</div>
+          <div><i>Audio</i>Music maker</div>
+          <div><i>Train</i>One-photo LoRA</div>
+          <div><i>Edit</i>Timeline</div>
+        </div>
+        <div class="studio-foot"><span><b>~14K</b> lines</span><span><b>126</b> commits</span><span><b>RTX 5090</b> native</span></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Case 2: agents -->
   <article class="case">
     <div class="case-text reveal">
       <div class="kick">MULTI-AGENT AUTOMATION · PYTHON · CLAUDE CODE · GITHUB API</div>
@@ -394,42 +430,6 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
         </svg>
       </div>
       <div class="term" id="term"><div class="bar"><i></i><i></i><i></i></div></div>
-    </div>
-  </article>
-
-  <!-- Case 2: studio -->
-  <article class="case">
-    <div class="case-text reveal">
-      <div class="kick">FOUNDER & SOLE DEVELOPER · FASTAPI · REACT · COMFYUI · TAURI</div>
-      <h3>SaberClaw: a local AI creative studio</h3>
-      <p>A professional AI studio that runs entirely on your own GPU: no cloud, no per-generation cost, nothing leaves the machine. Image, video, voice and music generation, a LoRA trainer, a timeline editor and an on-device assistant, behind one interface built for people who never want to see a node graph.</p>
-      <ul class="ticks">
-        <li>10+ open models orchestrated behind one UI (LTX 2.5 video, Qwen-Image-Edit, Wan 2.2 and more)</li>
-        <li>Turns one reference photo into a full, varied LoRA training set and picks the best checkpoint automatically</li>
-        <li>On-device assistant (Gemma via Ollama) that knows the app's own tools</li>
-        <li>Packaged as a native desktop app for pre-built RTX workstations</li>
-      </ul>
-      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">ComfyUI</span><span class="tag">AI-Toolkit</span><span class="tag">Ollama</span><span class="tag">CUDA</span></div>
-    </div>
-    <div class="case-media reveal">
-      <div class="studio">
-        <div class="studio-head"><img src="assets/builds/saberclaw-logo.png" alt="SaberClaw logo" width="58" height="58"><div><b>Saber<span>Claw</span></b><small>Local inference · no cloud · no account</small></div></div>
-        <div class="feat" id="feat">
-          <div><i>Image</i>Text to image</div>
-          <div><i>Image</i>Instruction edit</div>
-          <div><i>Image</i>Comics</div>
-          <div><i>Video</i>Text to video</div>
-          <div><i>Video</i>Character video</div>
-          <div><i>Video</i>Video edit</div>
-          <div><i>Video</i>Lip sync</div>
-          <div><i>Video</i>Character swap</div>
-          <div><i>Audio</i>Voice clone</div>
-          <div><i>Audio</i>Music maker</div>
-          <div><i>Train</i>One-photo LoRA</div>
-          <div><i>Edit</i>Timeline</div>
-        </div>
-        <div class="studio-foot"><span><b>~14K</b> lines</span><span><b>126</b> commits</span><span><b>RTX 5090</b> native</span></div>
-      </div>
     </div>
   </article>
 
