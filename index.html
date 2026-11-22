@@ -251,6 +251,14 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 .reel-mini .m{font-size:.8rem;color:#c3cfe8;margin-top:.15rem}
 .reel-mini .k{margin-left:auto;flex:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#c3cfe8}
 @media(max-width:700px){.reel-mini .k{display:none}}
+/* pc#338: Scribe X teardown, a vertical film with the same centered Play button as the 3D watch film */
+.vfeat{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1.4rem,4vw,3.5rem);align-items:center;padding:clamp(1rem,2.5vw,1.6rem);border:1px solid var(--border);border-radius:24px;background:#0a0f1c}
+.vfeat .m3d-film{height:clamp(26rem,48vw,38rem)}
+.vfeat .kick{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:#a9c3ff;margin-bottom:.7rem}
+.vfeat h3{font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:800;margin-bottom:.8rem}
+.vfeat p{color:#b9c5de;font-size:1rem;margin-bottom:1rem}
+.vfeat .ticks{margin:0}
+@media(max-width:880px){.vfeat{grid-template-columns:1fr}.vfeat .m3d-film{height:auto;width:100%}}
 .reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.6);backdrop-filter:blur(6px);border:1px solid var(--border)}
 @media(max-width:700px){
   .reel-card .play{top:.8rem;left:auto;right:.8rem;transform:none;width:46px;height:46px}
@@ -607,6 +615,24 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
       <span class="badge">Showreel</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes</div></div>
+    </div>
+    <div class="vfeat reveal" id="scribe-x-teardown">
+      <div class="m3d-film" data-film>
+        <video muted playsinline preload="none" poster="assets/scribe-x-teardown-poster.jpg" data-src="assets/scribe-x-teardown.mp4" aria-label="41-second exploded-view film of the Scribe X concept smart pen, rendered in Blender: the pen comes apart part by part, the electronics are named, a blueprint view, then it clicks back together and the logo switches on"></video>
+        <button class="m3d-play" type="button" aria-label="Play the 41-second film with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span><span class="lbl">Play · 41 s, sound on</span></button>
+        <button class="m3d-snd" type="button" data-on="true" aria-label="Mute the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9.5l5 5m0-5l-5 5"/></svg><span>Mute</span></button>
+        <div class="cap"><b>Scribe X teardown</b>Press play with the sound up: every part's click lands on its frame.</div>
+      </div>
+      <div>
+        <div class="kick">CONCEPT PIECE · PYTHON + BLENDER · 3D EXPLODED VIEW</div>
+        <h3>Scribe X smart pen teardown</h3>
+        <p>Scribe X is a made-up smart pen. I modeled it entirely from a Python script in Blender, then took it apart on camera: the barrel opens, the electronics float out and get named, it turns into a blueprint and clicks back together like a real pen button.</p>
+        <ul class="ticks">
+          <li>Every part, from the battery and main board to the pressure spring, built procedurally in code</li>
+          <li>Zero clipping: every part leaves on its own path, checked frame by frame</li>
+          <li>Sound designed in code from the animation's keyframes, so each click lands on its exact frame</li>
+        </ul>
+      </div>
     </div>
     <button class="reel-mini reveal" type="button" id="sabertooth-sneaks" data-play data-vert data-src="assets/sabertooth-sneaks.mp4" data-title="Sabertooth Sneaks" data-meta="15-second vertical concept ad for an invented sneaker brand, made with Higgsfield">
       <img src="assets/sabertooth-sneaks-poster.jpg" alt="Orange Sabertooth Sneaks running shoe on black" loading="lazy">
@@ -1053,6 +1079,31 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.con
     snd.addEventListener('click', () => setSnd(film.muted));
   }
   document.addEventListener('visibilitychange', () => { if (!viewer) return; document.hidden ? viewer.pause() : viewer.resume(); });
+})();
+// ---------- pc#338: other inline vertical films (Scribe X teardown): same centered Play button and Mute pill as the watch film ----------
+(() => {
+  const films = [...document.querySelectorAll('[data-film]')];
+  films.forEach(box => {
+    const film = box.querySelector('video'), play = box.querySelector('.m3d-play'), snd = box.querySelector('.m3d-snd');
+    if (!film || !play || !snd) return;
+    const setSnd = on => { film.muted = !on; snd.dataset.on = String(on); snd.querySelector('span').textContent = on ? 'Mute' : 'Unmute'; snd.setAttribute('aria-label', on ? 'Mute the film' : 'Unmute the film'); };
+    film.addEventListener('playing', () => {
+      box.classList.add('playing');
+      document.querySelectorAll('video').forEach(v => { if (v !== film && !v.paused && !v.muted) v.pause(); });
+    });
+    film.addEventListener('pause', () => box.classList.remove('playing'));
+    film.addEventListener('ended', () => { box.classList.remove('playing'); film.currentTime = 0; });
+    play.addEventListener('click', () => {
+      const first = !box.classList.contains('started');
+      if (!film.src) film.src = film.dataset.src;
+      if (first) { setSnd(true); box.classList.add('started'); }
+      const p = film.play();   // inside the tap, so iPhone allows sound
+      if (p && p.catch) p.catch(() => { setSnd(false); film.play().catch(() => {}); });
+    });
+    film.addEventListener('click', () => { if (!film.paused) film.pause(); });
+    snd.addEventListener('click', () => setSnd(film.muted));
+    new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) film.pause(); })).observe(box);
+  });
 })();
 </script>
 </body>
