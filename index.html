@@ -230,44 +230,35 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 .card h4{font-family:'Sora',sans-serif;font-size:1.12rem;margin-bottom:.55rem}
 .card p{color:var(--muted);font-size:.92rem;margin-bottom:1rem}
 
-/* reel */
-.reels{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
-@media(max-width:700px){.reels{grid-template-columns:1fr}}
-.reel-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border);background:#0a0f1c;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
-.reel-card.wide{grid-column:1/-1}
+/* reel (pc#341): one tidy grid of same-size cards, 4 shown, the rest behind "See all work" */
+.reels{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.reel-card{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid var(--border);background:#0a0f1c;aspect-ratio:16/9;transition:transform .4s,border-color .4s,box-shadow .4s}
+.reel-card.more{display:none}
+.reels.all .reel-card.more{display:block;animation:reelIn .45s ease both}
+@keyframes reelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .reel-card:hover{transform:translateY(-5px);border-color:rgba(34,211,238,.5);box-shadow:0 20px 55px rgba(0,0,0,.55)}
 .reel-card img,.reel-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s,filter .4s}
 .reel-card:hover img{transform:scale(1.05);filter:brightness(.7)}
-.reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:1.3rem 1.4rem;background:linear-gradient(to top,rgba(5,7,13,.9) 0%,rgba(5,7,13,.1) 55%,transparent 100%)}
-.reel-card h3{font-size:1.2rem;margin-bottom:.15rem}
-.reel-card .meta{font-size:.83rem;color:#c3cfe8}
-.reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
-.reel-card:hover .play{transform:translate(-50%,-50%) scale(1.12);background:var(--grad);border-color:transparent}
+.reel-card .overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem 1.2rem;background:linear-gradient(to top,rgba(5,7,13,.92) 0%,rgba(5,7,13,.1) 55%,transparent 100%)}
+.reel-card h3{font-size:1.1rem;margin-bottom:.15rem}
+.reel-card .meta{font-size:.8rem;color:#c3cfe8;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:64px;height:64px;border-radius:50%;background:rgba(4,10,22,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:2px solid rgba(34,211,238,.85);box-shadow:0 0 0 6px rgba(34,211,238,.12);display:grid;place-items:center;transition:transform .35s,background .35s}
+.reel-card:hover .play{transform:translate(-50%,-50%) scale(1.1);background:var(--grad);border-color:transparent}
 .reel-card .play svg{width:24px;height:24px;margin-left:4px;fill:#fff}
-.reel-mini{grid-column:1/-1;display:flex;align-items:center;gap:1rem;width:100%;padding:.7rem 1rem .7rem .7rem;border:1px solid var(--border);border-radius:16px;background:#0a0f1c;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .3s}
-.reel-mini:hover,.reel-mini:focus-visible{border-color:rgba(34,211,238,.5)}
-.reel-mini img{width:54px;height:96px;flex:none;object-fit:cover;border-radius:10px}
-.reel-mini .t{font-weight:600;font-size:.98rem}
-.reel-mini .m{font-size:.8rem;color:#c3cfe8;margin-top:.15rem}
-.reel-mini .k{margin-left:auto;flex:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#c3cfe8}
-@media(max-width:700px){.reel-mini .k{display:none}}
-/* pc#338: Scribe X teardown, a vertical film with the same centered Play button as the 3D watch film */
-.vfeat{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1.4rem,4vw,3.5rem);align-items:center;padding:clamp(1rem,2.5vw,1.6rem);border:1px solid var(--border);border-radius:24px;background:#0a0f1c}
-.vfeat .m3d-film{height:clamp(26rem,48vw,38rem)}
-.vfeat .kick{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:#a9c3ff;margin-bottom:.7rem}
-.vfeat h3{font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:800;margin-bottom:.8rem}
-.vfeat p{color:#b9c5de;font-size:1rem;margin-bottom:1rem}
-.vfeat .ticks{margin:0}
-@media(max-width:880px){.vfeat{grid-template-columns:1fr}.vfeat .m3d-film{height:auto;width:100%}}
-.reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.6);backdrop-filter:blur(6px);border:1px solid var(--border)}
+.reel-card .badge{position:absolute;top:.9rem;left:.9rem;z-index:3;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border)}
+.reels-more{display:flex;justify-content:center;margin-top:1.6rem}
+.reels-more .btn em{font-style:normal;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.65;margin-left:.35rem}
 @media(max-width:700px){
-  .reel-card .play{top:.8rem;left:auto;right:.8rem;transform:none;width:46px;height:46px}
-  .reel-card:hover .play{transform:scale(1.08)}
-  .reel-card .play svg{width:18px;height:18px;margin-left:3px}
-  .reel-card .badge{top:.8rem;left:.8rem;font-size:.6rem}
-  .reel-card .overlay{padding:1rem}
-  .reel-card h3{font-size:1.05rem}
-  .reel-card .meta{font-size:.78rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .reels{gap:.7rem}
+  .reel-card{aspect-ratio:4/3;border-radius:14px}
+  .reel-card .play{width:38px;height:38px;top:38%;border-width:1.5px;box-shadow:0 0 0 4px rgba(34,211,238,.12)}
+  .reel-card:hover .play{transform:translate(-50%,-50%)}
+  .reel-card:hover{transform:none}
+  .reel-card .play svg{width:14px;height:14px;margin-left:2px}
+  .reel-card .badge{display:none}
+  .reel-card .overlay{padding:.6rem .7rem}
+  .reel-card h3{font-size:.86rem;line-height:1.2;margin:0}
+  .reel-card .meta{display:none}
 }
 
 /* about */
@@ -306,6 +297,8 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 .modal-inner{position:relative;width:min(1100px,100%)}
 .modal video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block;box-shadow:0 30px 80px rgba(0,0,0,.65)}
 .modal video.vert{width:auto;max-width:100%;margin:0 auto}
+.modal video.vert{max-height:calc(100vh - 8rem);max-height:calc(100dvh - 8rem)}
+@media(max-width:700px){.modal-title .m{display:none}}
 .modal-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem;gap:1rem;flex-wrap:wrap}
 .modal-title{font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem}
 .modal-title .m{color:var(--muted);font-weight:400;font-size:.85rem;margin-left:.6rem}
@@ -591,55 +584,45 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 <section id="reel">
   <div class="label reveal">02 / Reel</div>
   <h2 class="title reveal">Cinematic AI, <span class="grad">in motion.</span></h2>
-  <div class="reels">
-    <div class="reel-card wide reveal" id="saberclaw-promo" data-src="assets/saberclaw-promo.mp4" data-title="SaberClaw promo" data-meta="64-second film pitching SaberClaw to military teams, made with Higgsfield Katana">
+  <div class="reels" id="reels">
+    <div class="reel-card reveal" id="saberclaw-promo" data-src="assets/saberclaw-promo.mp4" data-title="SaberClaw promo" data-meta="64-second film pitching SaberClaw to military teams, made with Higgsfield Katana">
       <video class="pv" muted loop playsinline preload="none" poster="assets/saberclaw-promo-poster.jpg" data-src="assets/saberclaw-promo-preview.mp4" aria-hidden="true"></video>
       <span class="badge">Featured · Product film</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>SaberClaw: the promo</h3><div class="meta">A 64-second film pitching my local AI studio to military teams, built in Higgsfield Katana from the real app's screens. Click for sound.</div></div>
+      <div class="overlay"><h3>SaberClaw promo</h3><div class="meta">64-second film pitching my local AI studio to military teams, made in Higgsfield Katana.</div></div>
     </div>
-    <div class="reel-card reveal" data-src="assets/ai-movie-star.mp4" data-title="AI Movie Star" data-meta="Cinematic promo starring an AI-generated movie star, presented during SOF Week 2026">
+    <div class="reel-card reveal" id="scribe-x-teardown" data-vert data-src="assets/scribe-x-teardown.mp4" data-title="Scribe X teardown" data-meta="41-second exploded-view film of a concept smart pen, modeled from a Python script in Blender, with sound synced to every part">
+      <img src="assets/scribe-x-teardown-card.jpg" alt="Blueprint view of the Scribe X concept smart pen with every part labeled" loading="lazy">
+      <span class="badge">3D teardown · 9:16</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>Scribe X teardown</h3><div class="meta">A concept smart pen built in code in Blender, taken apart part by part.</div></div>
+    </div>
+    <div class="reel-card reveal" id="sabertooth-sneaks" data-vert data-src="assets/sabertooth-sneaks.mp4" data-title="Sabertooth Sneaks" data-meta="15-second vertical concept ad for an invented sneaker brand, made with Higgsfield">
+      <img src="assets/sabertooth-sneaks-card.jpg" alt="Orange Sabertooth Sneaks running shoe on a black display stand" loading="lazy">
+      <span class="badge">Concept ad · 9:16</span>
+      <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="overlay"><h3>Sabertooth Sneaks</h3><div class="meta">15-second vertical ad for an invented sneaker brand, made with Higgsfield.</div></div>
+    </div>
+    <div class="reel-card reveal" id="ai-movie-star" data-src="assets/ai-movie-star.mp4" data-title="AI Movie Star" data-meta="Cinematic promo starring an AI-generated movie star, presented during SOF Week 2026">
       <img src="assets/poster-movie-star.jpg" alt="Cinematic promo starring an AI-generated movie star" loading="lazy">
       <span class="badge">Short film</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>AI Movie Star</h3><div class="meta">Cinematic promo presented during SOF Week 2026</div></div>
+      <div class="overlay"><h3>AI Movie Star</h3><div class="meta">Cinematic promo presented during SOF Week 2026.</div></div>
     </div>
-    <div class="reel-card reveal" data-src="assets/motion-reel.mp4" data-title="Motion Reel" data-meta="Kinetic type and motion graphics, made with Higgsfield Katana">
+    <div class="reel-card more" id="motion-reel" data-src="assets/motion-reel.mp4" data-title="Motion Reel" data-meta="Kinetic type and motion graphics, made with Higgsfield Katana">
       <video class="pv" muted loop playsinline preload="none" poster="assets/motion-reel-poster.jpg" data-src="assets/motion-reel-preview.mp4" aria-hidden="true"></video>
       <span class="badge">Motion graphics</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>Motion Reel</h3><div class="meta">Kinetic type and motion graphics, made with Higgsfield Katana. Click for sound.</div></div>
+      <div class="overlay"><h3>Motion Reel</h3><div class="meta">Kinetic type and motion graphics, made with Higgsfield Katana.</div></div>
     </div>
-    <div class="reel-card wide reveal" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Generative AI scenes">
+    <div class="reel-card more" id="ai-showreel" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Generative AI scenes">
       <img src="assets/poster-reel.jpg" alt="AI generative video showreel" loading="lazy">
       <span class="badge">Showreel</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-      <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes</div></div>
+      <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes.</div></div>
     </div>
-    <div class="vfeat reveal" id="scribe-x-teardown">
-      <div class="m3d-film" data-film>
-        <video muted playsinline preload="none" poster="assets/scribe-x-teardown-poster.jpg" data-src="assets/scribe-x-teardown.mp4" aria-label="41-second exploded-view film of the Scribe X concept smart pen, rendered in Blender: the pen comes apart part by part, the electronics are named, a blueprint view, then it clicks back together and the logo switches on"></video>
-        <button class="m3d-play" type="button" aria-label="Play the 41-second film with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span><span class="lbl">Play · 41 s, sound on</span></button>
-        <button class="m3d-snd" type="button" data-on="true" aria-label="Mute the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9.5l5 5m0-5l-5 5"/></svg><span>Mute</span></button>
-        <div class="cap"><b>Scribe X teardown</b>Press play with the sound up: every part's click lands on its frame.</div>
-      </div>
-      <div>
-        <div class="kick">CONCEPT PIECE · PYTHON + BLENDER · 3D EXPLODED VIEW</div>
-        <h3>Scribe X smart pen teardown</h3>
-        <p>Scribe X is a made-up smart pen. I modeled it entirely from a Python script in Blender, then took it apart on camera: the barrel opens, the electronics float out and get named, it turns into a blueprint and clicks back together like a real pen button.</p>
-        <ul class="ticks">
-          <li>Every part, from the battery and main board to the pressure spring, built procedurally in code</li>
-          <li>Zero clipping: every part leaves on its own path, checked frame by frame</li>
-          <li>Sound designed in code from the animation's keyframes, so each click lands on its exact frame</li>
-        </ul>
-      </div>
-    </div>
-    <button class="reel-mini reveal" type="button" id="sabertooth-sneaks" data-play data-vert data-src="assets/sabertooth-sneaks.mp4" data-title="Sabertooth Sneaks" data-meta="15-second vertical concept ad for an invented sneaker brand, made with Higgsfield">
-      <img src="assets/sabertooth-sneaks-poster.jpg" alt="Orange Sabertooth Sneaks running shoe on black" loading="lazy">
-      <span><span class="t" style="display:block">Sabertooth Sneaks</span><span class="m" style="display:block">15-second vertical concept ad for an invented sneaker brand, made with Higgsfield. Click for sound.</span></span>
-      <span class="k">Concept ad · 9:16</span>
-    </button>
   </div>
+  <div class="reels-more"><button class="btn btn-ghost" id="reelsMore" type="button" aria-expanded="false" aria-controls="reels"><span>See all work</span> <em>6 films</em></button></div>
 </section>
 
 <section id="studio3d">
@@ -660,7 +643,7 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
       <div class="m3d-hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.6a6 6 0 0 1-4.6-2.2L4.6 16a1.5 1.5 0 0 1 2.3-1.9L9 16.5V11"/></svg><span id="m3dHintTxt">Drag to spin · Scroll to zoom</span></div>
     </div>
     <div class="m3d-film reveal">
-      <video id="m3dFilm" muted loop playsinline preload="none" poster="assets/3d/chronograph-exploded-v2-poster.jpg" data-src="assets/3d/chronograph-exploded-v5.mp4" aria-label="38-second exploded-view film, with frame-synced sound, of the chronograph, rendered in Blender Cycles: the head comes off its strap, every part separates along its own axis, the main parts are named one beat at a time, a blueprint view, then it rebuilds"></video>
+      <video id="m3dFilm" muted loop playsinline preload="none" poster="assets/3d/chronograph-exploded-v5-poster.jpg" data-src="assets/3d/chronograph-exploded-v5.mp4" aria-label="38-second exploded-view film, with frame-synced sound, of the chronograph, rendered in Blender Cycles: the head comes off its strap, every part separates along its own axis, the main parts are named one beat at a time, a blueprint view, then it rebuilds"></video>
       <button class="m3d-play" id="m3dPlay" type="button" aria-label="Play the 38-second film with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span><span class="lbl">Play · 38 s, sound on</span></button>
       <button class="m3d-snd" id="m3dSnd" type="button" data-on="true" aria-label="Mute the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9.5l5 5m0-5l-5 5"/></svg><span>Mute</span></button>
       <div class="cap"><b>Exploded view, rendered in Cycles</b>Every part leaves on its own axis with zero clipping, gets named, turns into a blueprint and goes back together. Every click is synced to its frame, so press play with the sound up.</div>
@@ -979,6 +962,18 @@ document.querySelectorAll('.card').forEach(card => card.addEventListener('pointe
   vids.forEach(v => o.observe(v));
 })();
 
+// reel: 4 films shown, "See all work" opens the rest in the same grid (pc#341)
+const reelsGrid = document.getElementById('reels'), reelsMore = document.getElementById('reelsMore');
+function showAllReels(on) {
+  reelsGrid.classList.toggle('all', on); reelsMore.setAttribute('aria-expanded', String(on));
+  reelsMore.querySelector('span').textContent = on ? 'Show fewer' : 'See all work';
+  reelsMore.querySelector('em').textContent = on ? '' : reelsGrid.querySelectorAll('.reel-card').length + ' films';
+}
+reelsMore.addEventListener('click', () => {
+  const on = !reelsGrid.classList.contains('all'); showAllReels(on);
+  if (!on) document.getElementById('reel').scrollIntoView({block: 'start', behavior: reduce ? 'auto' : 'smooth'});
+});
+
 // video modal
 const modal = document.getElementById('videoModal'), mVideo = document.getElementById('modalVideo');
 const mTitle = document.getElementById('modalTitle'), mMeta = document.getElementById('modalMeta');
@@ -998,6 +993,7 @@ document.querySelectorAll('.reel-card,[data-play]').forEach(c => c.addEventListe
 (() => {
   const id = decodeURIComponent(location.hash.slice(1)); if (!id) return;
   const c = document.getElementById(id); if (!c || !c.classList.contains('reel-card')) return;
+  if (c.classList.contains('more')) showAllReels(true);
   c.scrollIntoView({block: 'center'}); openModal(c);
 })();
 sBtn.addEventListener('click', () => setSound(mVideo.muted));
