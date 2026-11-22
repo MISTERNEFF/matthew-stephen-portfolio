@@ -352,11 +352,23 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 .m3d-film{position:relative;border-radius:24px;border:1px solid var(--border);overflow:hidden;background:#05070d;aspect-ratio:9/16;height:clamp(26rem,52vw,40rem);box-shadow:0 30px 80px rgba(0,0,0,.45)}
 .m3d-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .m3d-film .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:2.4rem 1rem .9rem;font-size:.78rem;color:#c3cfe8;background:linear-gradient(to top,rgba(5,7,13,.92),transparent)}
-.m3d-film .cap{transition:opacity .6s;padding-right:6.6rem}
+.m3d-film .cap{transition:opacity .6s}
 .m3d-film.playing .cap{opacity:0}
+/* pc#332: visitors couldn't tell the poster was a film; a centered Play button starts it with sound (whole poster is the tap target) */
+.m3d-play{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:0 0 3.5rem;border:0;background:rgba(5,7,13,.18);color:#fff;cursor:pointer;transition:opacity .35s,background .25s;-webkit-tap-highlight-color:transparent}
+.m3d-play:hover{background:rgba(5,7,13,.05)}
+.m3d-play .ring{display:grid;place-items:center;width:5.2rem;height:5.2rem;border-radius:50%;background:rgba(4,10,22,.62);border:2px solid rgba(34,211,238,.85);box-shadow:0 0 0 8px rgba(34,211,238,.12),0 12px 40px rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:transform .25s}
+.m3d-play:hover .ring{transform:scale(1.07)}
+.m3d-play svg{width:2.1rem;height:2.1rem;margin-left:.3rem;fill:#e6f6ff}
+.m3d-play .lbl{font:600 .82rem/1 'Sora',sans-serif;letter-spacing:.02em;padding:.4rem .75rem;border-radius:999px;background:rgba(4,10,22,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.m3d-play:focus-visible .ring{outline:2px solid #22d3ee;outline-offset:4px}
+.m3d-film.playing .m3d-play{opacity:0;pointer-events:none}
+.m3d-film video{cursor:pointer}
+.m3d-film .m3d-snd{display:none}
+.m3d-film.started .m3d-snd{display:flex}
 .m3d-snd{position:absolute;bottom:.8rem;right:.8rem;z-index:3;display:flex;align-items:center;gap:.4rem;padding:.45rem .75rem;border-radius:999px;border:1px solid rgba(34,211,238,.45);background:rgba(4,10,22,.72);color:#e6f6ff;font:600 .78rem/1 'Sora',sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
 .m3d-snd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.m3d-snd .w{display:none}.m3d-snd[aria-pressed="true"] .w{display:inline}.m3d-snd[aria-pressed="true"] .x{display:none}
+.m3d-snd .w{display:none}.m3d-snd[data-on="true"] .w{display:inline}.m3d-snd[data-on="true"] .x{display:none}
 .m3d-snd:focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
 .m3d-film .cap b{display:block;font-family:'Sora',sans-serif;font-size:.95rem;color:var(--text);margin-bottom:.1rem}
 .m3d-info{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);margin-top:2rem;align-items:start}
@@ -623,8 +635,9 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
     </div>
     <div class="m3d-film reveal">
       <video id="m3dFilm" muted loop playsinline preload="none" poster="assets/3d/chronograph-exploded-v2-poster.jpg" data-src="assets/3d/chronograph-exploded-v5.mp4" aria-label="38-second exploded-view film, with frame-synced sound, of the chronograph, rendered in Blender Cycles: the head comes off its strap, every part separates along its own axis, the main parts are named one beat at a time, a blueprint view, then it rebuilds"></video>
-      <button class="m3d-snd" id="m3dSnd" type="button" aria-pressed="false" aria-label="Turn the film's sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9.5l5 5m0-5l-5 5"/></svg><span>Sound</span></button>
-      <div class="cap"><b>Exploded view, rendered in Cycles</b>Every part leaves on its own axis with zero clipping, gets named, turns into a blueprint and goes back together. Every click is synced to its frame: turn the sound on.</div>
+      <button class="m3d-play" id="m3dPlay" type="button" aria-label="Play the 38-second film with sound"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></span><span class="lbl">Play · 38 s, sound on</span></button>
+      <button class="m3d-snd" id="m3dSnd" type="button" data-on="true" aria-label="Mute the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9.5l5 5m0-5l-5 5"/></svg><span>Mute</span></button>
+      <div class="cap"><b>Exploded view, rendered in Cycles</b>Every part leaves on its own axis with zero clipping, gets named, turns into a blueprint and goes back together. Every click is synced to its frame, so press play with the sound up.</div>
     </div>
   </div>
   <div class="m3d-info">
@@ -1016,21 +1029,29 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.con
       else if (viewer) viewer.pause();
     }
     if (e.target === film && film) {
-      if (e.isIntersecting) { if (!film.src) { film.src = film.dataset.src; film.addEventListener('playing', () => film.parentElement.classList.add('playing')); film.addEventListener('pause', () => film.parentElement.classList.remove('playing')); } if (!reduce) film.play().catch(() => {}); }
-      else film.pause();
+      if (!e.isIntersecting) film.pause();   // pc#332: no autoplay; it starts from the Play button
     }
   }), { rootMargin: '600px 0px' });
   io.observe(stage);
   if (film) io.observe(film);
-  // pc#309: the v3 film has frame-synced ASMR sound; it autoplays muted (browser rule), this button turns it on
-  const snd = document.getElementById('m3dSnd');
-  if (film && snd) snd.addEventListener('click', () => {
-    if (!film.src) film.src = film.dataset.src;
-    const on = film.muted; film.muted = !on;
-    if (on) { film.currentTime = 0; film.play().catch(() => {}); }
-    snd.setAttribute('aria-pressed', String(on));
-    snd.setAttribute('aria-label', on ? "Turn the film's sound off" : "Turn the film's sound on");
-  });
+  // pc#332 (replaces pc#309's muted autoplay + Sound pill): the poster shows a centered Play button; tapping it plays the
+  // film from the top with its frame-synced sound on. Once started, a small Mute/Unmute pill stays; tapping the film pauses it.
+  const snd = document.getElementById('m3dSnd'), play = document.getElementById('m3dPlay');
+  if (film && snd && play) {
+    const box = film.parentElement;
+    const setSnd = on => { film.muted = !on; snd.dataset.on = String(on); snd.querySelector('span').textContent = on ? 'Mute' : 'Unmute'; snd.setAttribute('aria-label', on ? 'Mute the film' : 'Unmute the film'); };
+    film.addEventListener('playing', () => box.classList.add('playing'));
+    film.addEventListener('pause', () => box.classList.remove('playing'));
+    play.addEventListener('click', () => {
+      const first = !box.classList.contains('started');
+      if (!film.src) film.src = film.dataset.src;
+      if (first) { setSnd(true); box.classList.add('started'); }
+      const p = film.play();   // inside the tap, so iPhone allows sound
+      if (p && p.catch) p.catch(() => { setSnd(false); film.play().catch(() => {}); });
+    });
+    film.addEventListener('click', () => { if (!film.paused) film.pause(); });
+    snd.addEventListener('click', () => setSnd(film.muted));
+  }
   document.addEventListener('visibilitychange', () => { if (!viewer) return; document.hidden ? viewer.pause() : viewer.resume(); });
 })();
 </script>
