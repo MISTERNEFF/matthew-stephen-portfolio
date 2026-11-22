@@ -358,8 +358,10 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 .m3d-info .ticks{margin:0}
 @media(max-width:880px){
   .m3d{grid-template-columns:1fr}
-  .m3d-stage{min-height:0;aspect-ratio:4/5}
-  .m3d-film{height:auto;aspect-ratio:9/16}
+  /* pc#328: WebKit (all iPhone browsers) treats justify-self:normal as start for grid items with an aspect-ratio, so they
+     shrank to their (absolutely positioned, zero-width) content and vanished. Chrome stretches them. Give them the width. */
+  .m3d-stage{min-height:0;aspect-ratio:4/5;width:100%;justify-self:stretch;align-self:start}
+  .m3d-film{height:auto;aspect-ratio:9/16;width:100%;justify-self:stretch;align-self:start}
   .m3d-info{grid-template-columns:1fr}
 }
 </style>
