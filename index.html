@@ -244,6 +244,13 @@ section{padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,5rem);max-width:75rem;m
 .reel-card .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:transform .35s,background .35s}
 .reel-card:hover .play{transform:translate(-50%,-50%) scale(1.12);background:var(--grad);border-color:transparent}
 .reel-card .play svg{width:24px;height:24px;margin-left:4px;fill:#fff}
+.reel-mini{grid-column:1/-1;display:flex;align-items:center;gap:1rem;width:100%;padding:.7rem 1rem .7rem .7rem;border:1px solid var(--border);border-radius:16px;background:#0a0f1c;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .3s}
+.reel-mini:hover,.reel-mini:focus-visible{border-color:rgba(34,211,238,.5)}
+.reel-mini img{width:54px;height:96px;flex:none;object-fit:cover;border-radius:10px}
+.reel-mini .t{font-weight:600;font-size:.98rem}
+.reel-mini .m{font-size:.8rem;color:#c3cfe8;margin-top:.15rem}
+.reel-mini .k{margin-left:auto;flex:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#c3cfe8}
+@media(max-width:700px){.reel-mini .k{display:none}}
 .reel-card .badge{position:absolute;top:1rem;left:1rem;z-index:3;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;background:rgba(5,7,13,.6);backdrop-filter:blur(6px);border:1px solid var(--border)}
 @media(max-width:700px){
   .reel-card .play{top:.8rem;left:auto;right:.8rem;transform:none;width:46px;height:46px}
@@ -290,6 +297,7 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 .modal.open{display:flex}
 .modal-inner{position:relative;width:min(1100px,100%)}
 .modal video{width:100%;max-height:78vh;border-radius:14px;background:#000;display:block;box-shadow:0 30px 80px rgba(0,0,0,.65)}
+.modal video.vert{width:auto;max-width:100%;margin:0 auto}
 .modal-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem;gap:1rem;flex-wrap:wrap}
 .modal-title{font-family:'Sora',sans-serif;font-weight:600;font-size:1.05rem}
 .modal-title .m{color:var(--muted);font-weight:400;font-size:.85rem;margin-left:.6rem}
@@ -588,6 +596,11 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes</div></div>
     </div>
+    <button class="reel-mini reveal" type="button" id="sabertooth-sneaks" data-play data-vert data-src="assets/sabertooth-sneaks.mp4" data-title="Sabertooth Sneaks" data-meta="15-second vertical concept ad for an invented sneaker brand, made with Higgsfield">
+      <img src="assets/sabertooth-sneaks-poster.jpg" alt="Orange Sabertooth Sneaks running shoe on black" loading="lazy">
+      <span><span class="t" style="display:block">Sabertooth Sneaks</span><span class="m" style="display:block">15-second vertical concept ad for an invented sneaker brand, made with Higgsfield. Click for sound.</span></span>
+      <span class="k">Concept ad · 9:16</span>
+    </button>
   </div>
 </section>
 
@@ -934,6 +947,7 @@ const sBtn = document.getElementById('soundToggle'), sIcon = document.getElement
 function setSound(on) { mVideo.muted = !on; sBtn.classList.toggle('on', on); sBtn.setAttribute('aria-pressed', String(on)); sIcon.textContent = on ? '🔊' : '🔇'; sLabel.textContent = on ? 'Sound on' : 'Muted'; }
 function openModal(card) {
   document.querySelectorAll('video.pv').forEach(v => v.pause());
+  mVideo.classList.toggle('vert', 'vert' in card.dataset);
   mVideo.src = card.dataset.src; mTitle.textContent = card.dataset.title; mMeta.textContent = card.dataset.meta;
   modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
   setSound(true);
