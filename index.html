@@ -592,19 +592,19 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
       <div class="overlay"><h3>SaberClaw promo</h3><div class="meta">64-second film pitching my local AI studio to military teams, made in Higgsfield Katana.</div></div>
     </div>
     <div class="reel-card reveal" id="scribe-x-teardown" data-vert data-src="assets/scribe-x-teardown.mp4" data-title="Scribe X teardown" data-meta="41-second exploded-view film of a concept smart pen, modeled from a Python script in Blender, with sound synced to every part">
-      <img src="assets/scribe-x-teardown-card.jpg" alt="Blueprint view of the Scribe X concept smart pen with every part labeled" loading="lazy">
+      <video class="pv" muted loop playsinline preload="none" poster="assets/scribe-x-teardown-card.jpg" data-src="assets/scribe-x-teardown-preview.mp4" aria-hidden="true"></video>
       <span class="badge">3D teardown · 9:16</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>Scribe X teardown</h3><div class="meta">A concept smart pen built in code in Blender, taken apart part by part.</div></div>
     </div>
     <div class="reel-card reveal" id="sabertooth-sneaks" data-vert data-src="assets/sabertooth-sneaks.mp4" data-title="Sabertooth Sneaks" data-meta="15-second vertical concept ad for an invented sneaker brand, made with Higgsfield">
-      <img src="assets/sabertooth-sneaks-card.jpg" alt="Orange Sabertooth Sneaks running shoe on a black display stand" loading="lazy">
+      <video class="pv" muted loop playsinline preload="none" poster="assets/sabertooth-sneaks-card.jpg" data-src="assets/sabertooth-sneaks-preview.mp4" aria-hidden="true"></video>
       <span class="badge">Concept ad · 9:16</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>Sabertooth Sneaks</h3><div class="meta">15-second vertical ad for an invented sneaker brand, made with Higgsfield.</div></div>
     </div>
     <div class="reel-card reveal" id="ai-movie-star" data-src="assets/ai-movie-star.mp4" data-title="AI Movie Star" data-meta="Cinematic promo starring an AI-generated movie star, presented during SOF Week 2026">
-      <img src="assets/poster-movie-star.jpg" alt="Cinematic promo starring an AI-generated movie star" loading="lazy">
+      <video class="pv" muted loop playsinline preload="none" poster="assets/poster-movie-star.jpg" data-src="assets/ai-movie-star-preview.mp4" aria-hidden="true"></video>
       <span class="badge">Short film</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>AI Movie Star</h3><div class="meta">Cinematic promo presented during SOF Week 2026.</div></div>
@@ -616,7 +616,7 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
       <div class="overlay"><h3>Motion Reel</h3><div class="meta">Kinetic type and motion graphics, made with Higgsfield Katana.</div></div>
     </div>
     <div class="reel-card more" id="ai-showreel" data-src="assets/reel-stitched.mp4" data-title="AI Showreel" data-meta="Generative AI scenes">
-      <img src="assets/poster-reel.jpg" alt="AI generative video showreel" loading="lazy">
+      <video class="pv" muted loop playsinline preload="none" poster="assets/poster-reel.jpg" data-src="assets/reel-stitched-preview.mp4" aria-hidden="true"></video>
       <span class="badge">Showreel</span>
       <div class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="overlay"><h3>AI Showreel</h3><div class="meta">Generative AI scenes.</div></div>
@@ -950,16 +950,23 @@ document.querySelectorAll('.card').forEach(card => card.addEventListener('pointe
 // marquee: duplicate track for a seamless loop
 (() => { const t = document.getElementById('track'); t.innerHTML += t.innerHTML; })();
 
-// reel previews: load and play only while on screen
+// reel previews (pc#342): every card's film loads lazily and plays muted on a loop only while on screen,
+// pauses offscreen and while a film is open in the player, and picks up again when the player closes
+const pvShown = new Set();
+function pvPlay(v) { if (!v.src) v.src = v.dataset.src; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+function pvResume() { pvShown.forEach(pvPlay); }
 (() => {
-  const vids = [...document.querySelectorAll('video.pv')];
-  if (reduce) return;
   const o = new IntersectionObserver(es => es.forEach(e => {
     const v = e.target;
-    if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-    else v.pause();
-  }), {threshold: .35});
-  vids.forEach(v => o.observe(v));
+    // several checkpoints, no early margin: WebKit (every iPhone browser) pauses muted films itself once they leave the
+    // real viewport, so each film must get another play() call as it comes back in
+    if (e.isIntersecting && e.intersectionRatio >= .25) { pvShown.add(v); if (!document.getElementById('videoModal').classList.contains('open')) pvPlay(v); }
+    else if (!e.isIntersecting || e.intersectionRatio < .1) { pvShown.delete(v); v.pause(); }
+  }), {threshold: [0, .1, .25, .5, .75, 1]});
+  document.querySelectorAll('video.pv').forEach(v => o.observe(v));
+  // watchdog: WebKit can pause a muted film it judged not visible yet (e.g. mid fade-in) and never restart it
+  setInterval(() => { if (document.hidden || document.getElementById('videoModal').classList.contains('open')) return;
+    pvShown.forEach(v => { if (v.paused) pvPlay(v); }); }, 1500);
 })();
 
 // reel: 4 films shown, "See all work" opens the rest in the same grid (pc#341)
@@ -987,7 +994,7 @@ function openModal(card) {
   setSound(true);
   const p = mVideo.play(); if (p && p.catch) p.catch(() => { setSound(false); mVideo.play(); });
 }
-function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; mVideo.pause(); mVideo.removeAttribute('src'); mVideo.load(); }
+function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; mVideo.pause(); mVideo.removeAttribute('src'); mVideo.load(); pvResume(); }
 document.querySelectorAll('.reel-card,[data-play]').forEach(c => c.addEventListener('click', () => openModal(c)));
 // deep link: /#saberclaw-promo scrolls to that film and opens it (muted if the browser blocks sound)
 (() => {
