@@ -403,7 +403,7 @@ footer{text-align:center;padding:2.5rem 1rem calc(3rem + env(safe-area-inset-bot
 </nav>
 
 <header class="hero" id="top">
-  <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.jpg" disablepictureinpicture disableremoteplayback src="assets/hero-cut.mp4"></video>
+  <video id="heroVid" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/hero-poster.jpg" disablepictureinpicture disableremoteplayback src="assets/hero-cut.mp4"></video>
   <div class="flash" id="heroFlash" aria-hidden="true"></div>
   <div class="hud" aria-hidden="true">
     <i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br bq"></i>
@@ -763,6 +763,34 @@ function whipOut(el, dir = -1) {
 function flash(f, d = 280) { if (f) f.animate([{opacity: 0}, {opacity: 1, offset: .2}, {opacity: 0}], {duration: d, easing: 'ease-out'}); }
 function reset(el) { el.getAnimations().forEach(a => a.cancel()); }
 document.documentElement.classList.add('js');
+
+// hero autoplay (pc#359): never rely on the autoplay attribute alone. iPhone Low Power Mode, Android data saver and
+// WebKit's own offscreen pause can leave it stopped; so force muted in JS, call play() on load, on every readiness
+// event, when the hero comes back on screen or the tab/bfcache returns, and once more on the first touch, tap or scroll
+(() => {
+  const v = document.getElementById('heroVid');
+  if (!v) return;
+  v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true; v.setAttribute('playsinline', '');
+  let onScreen = true;
+  const modalOpen = () => { const m = document.getElementById('videoModal'); return m && m.classList.contains('open'); };
+  const play = () => {
+    if (!v.paused || document.hidden || !onScreen || modalOpen()) return;
+    v.muted = true;
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
+  };
+  play();
+  ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'suspend', 'stalled'].forEach(ev => v.addEventListener(ev, play));
+  window.addEventListener('load', play);
+  window.addEventListener('pageshow', play);
+  document.addEventListener('visibilitychange', play);
+  new IntersectionObserver(es => es.forEach(e => { onScreen = e.isIntersecting; play(); }), {threshold: 0}).observe(v);
+  // first gesture unlocks playback where autoplay was refused (Low Power Mode); keep listening until it is playing
+  const kick = () => { play(); if (!v.paused) gestures.forEach(g => window.removeEventListener(g, kick, true)); };
+  const gestures = ['touchstart', 'touchend', 'pointerdown', 'click', 'scroll', 'keydown'];
+  gestures.forEach(g => window.addEventListener(g, kick, {capture: true, passive: true}));
+  // watchdog: restart it if the browser paused it on its own while it is on screen
+  setInterval(play, 1500);
+})();
 
 // hero: graphics synced to the background video's own timecode
 (() => {
