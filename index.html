@@ -69,7 +69,7 @@ nav.scrolled{background:rgba(5,7,13,.78);border-color:var(--border)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:7rem clamp(1.2rem,6vw,5rem) 5rem}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#05070d}
+.hero video,.hero .hero-anim{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;background:#05070d}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;
   background:radial-gradient(ellipse at center,rgba(5,7,13,.46) 0%,rgba(5,7,13,.78) 100%),
              linear-gradient(to bottom,rgba(5,7,13,.45) 0%,transparent 28%,transparent 62%,var(--bg) 100%)}
@@ -776,8 +776,22 @@ document.documentElement.classList.add('js');
   const play = () => {
     if (!v.paused || document.hidden || !onScreen || modalOpen()) return;
     v.muted = true;
-    const p = v.play(); if (p && p.catch) p.catch(() => {});
+    const p = v.play(); if (p && p.catch) p.catch(e => { if (e && e.name === 'NotAllowedError') lowPower(); });
   };
+  // pc#367: iPhone Low Power Mode refuses every play() until a tap. Safari still animates an MP4 inside an <img>
+  // (like a GIF), so lay the same clip over the video as an image; the hero graphics follow window.__heroClock instead.
+  // Browsers that can't show MP4 in <img> fire onerror and keep the poster until the first tap. Once the real video
+  // plays (first tap), the image is removed and the graphics follow the video's own timecode again.
+  let anim = null;
+  const lowPower = () => {
+    if (anim) return;
+    anim = new Image(); anim.className = 'hero-anim'; anim.alt = ''; anim.setAttribute('aria-hidden', 'true'); anim.decoding = 'async';
+    anim.onload = () => { if (!v.paused) { anim.remove(); return; } const t0 = performance.now();
+      window.__heroClock = () => ((performance.now() - t0) / 1000) % (v.duration || 10.7); v.after(anim); };
+    anim.onerror = () => { anim = 'none'; };
+    anim.src = v.currentSrc || v.getAttribute('src');
+  };
+  v.addEventListener('playing', () => { if (anim && anim !== 'none') { anim.remove(); anim = 'done'; window.__heroClock = null; } });
   play();
   ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'suspend', 'stalled'].forEach(ev => v.addEventListener(ev, play));
   window.addEventListener('load', play);
@@ -816,7 +830,7 @@ document.documentElement.classList.add('js');
   };
   const fmt = t => { const s = Math.floor(t), f = Math.floor((t - s) * 30), p = n => String(n).padStart(2, '0'); return `00:${p(Math.floor(s / 60))}:${p(s % 60)}:${p(f)}`; };
   const tick = now => {
-    const t = v.currentTime || 0;
+    const t = (window.__heroClock && v.paused) ? window.__heroClock() : (v.currentTime || 0);
     let i = 0; for (let k = 0; k < cues.length; k++) if (t >= cues[k][0]) i = k;
     if (i !== cur) { cur = i; show(i); }
     if (now - last > 80) { tc.textContent = fmt(t); last = now; }
